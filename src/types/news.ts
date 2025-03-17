@@ -9,9 +9,6 @@ export interface NewsItem {
 export interface NewsResponse {
   rss: {
     channel: {
-      title: string;
-      link: string;
-      description: string;
       lastBuildDate: string;
       total: number;
       start: number;
