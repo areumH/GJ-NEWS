@@ -1,9 +1,10 @@
+import { Size } from '@/types/theme';
+import { PLACE_HOLDER } from '@/constants/messages';
 import { SearchIcon } from '@/components/Icon/icons/SearchIcon';
 import iconSizes from '@/components/Icon/iconSizes';
-import { PLACE_HOLDER } from '@/constants/messages';
 
 export interface SearchBarProps {
-  size?: 'sm' | 'md' | 'lg';
+  size?: Size;
 }
 
 const SearchBar = ({ size = 'md' }: SearchBarProps) => {
