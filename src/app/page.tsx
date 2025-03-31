@@ -1,7 +1,9 @@
+import SearchBar from "@/components/SearchBar";
+
 export default function Main() {
   return (
-    <div className="flex flex-col items-center text-blue-500">
-      GJ-NEWS
+    <div className="flex flex-col w-full min-h-screen justify-center items-center  bg-gray-50">
+      <SearchBar />
     </div>
   );
 }
