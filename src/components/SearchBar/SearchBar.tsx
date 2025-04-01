@@ -7,9 +7,10 @@ import { PLACE_HOLDER } from '@/constants/messages';
 import { SearchIcon } from '@/components/Icon/icons/SearchIcon';
 import iconSizes from '@/components/Icon/iconSizes';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { textSizes, inputStyles, buttonStyles } from './SearchBar.style';
 
 export interface SearchBarProps {
-  size?: Size;
+  size?: Exclude<Size, 'md'>;
 }
 
 const SearchBar = ({ size = 'lg' }: SearchBarProps) => {
@@ -28,10 +29,12 @@ const SearchBar = ({ size = 'lg' }: SearchBarProps) => {
   };
 
   return (
-    <div className="flex max-w-5xl w-10/12 h-16 items-center  rounded-l-full rounded-r-full px-4  bg-white shadow-lg border-2 border-gray-100">
+    <div
+      className={`flex max-w-5xl w-10/12 items-center  rounded-l-full rounded-r-full ${inputStyles[size]}  bg-white shadow-lg border-2 border-gray-100`}
+    >
       <button
         onClick={handleSearch}
-        className="flex shrink-0 justify-center items-center w-12 h-12 rounded-full bg-indigo-200 cursor-pointer"
+        className={`flex shrink-0 justify-center items-center ${buttonStyles[size]} rounded-full bg-indigo-200 cursor-pointer`}
       >
         <SearchIcon className={`${iconSizes[size]}`} />
       </button>
@@ -40,7 +43,7 @@ const SearchBar = ({ size = 'lg' }: SearchBarProps) => {
         placeholder={PLACE_HOLDER.SEARCH}
         onChange={(e) => setKeyword(e.target.value)}
         onKeyDown={handleKeyDown}
-        className="w-full h-full px-5 placeholder-gray-500 text-xl outline-none text-black"
+        className={`w-full h-full px-5 placeholder-gray-500 ${textSizes[size]} outline-none text-black`}
       />
     </div>
   );
