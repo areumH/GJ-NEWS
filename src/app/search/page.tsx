@@ -1,7 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import SearchBar from '@/components/SearchBar/SearchBar';
+import SearchBar from '@/components/SearchBar';
 
 export default function Search() {
   const searchParams = useSearchParams();
