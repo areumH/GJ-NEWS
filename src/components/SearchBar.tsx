@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { PATH } from '@/constants/path';
 import { PLACE_HOLDER } from '@/constants/messages';
 import { SearchIcon } from '@/components/Icon/icons/SearchIcon';
-import iconSizes from '@/components/Icon/iconSizes';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 const SearchBar = () => {
@@ -28,7 +27,7 @@ const SearchBar = () => {
         onClick={handleSearch}
         className="flex shrink-0 justify-center items-center w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-indigo-200 cursor-pointer"
       >
-        <SearchIcon className={`${iconSizes['sm']} sm:${iconSizes['lg']}`} />
+        <SearchIcon className="w-6 h-6 sm:w-8 sm:h-8" />
       </button>
       <input
         value={keyword}
