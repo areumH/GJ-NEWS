@@ -14,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={pretendard.className}>{children}</body>
+      <body className={`${pretendard.className} max-w-[1200px] mx-auto`}>{children}</body>
     </html>
   );
 }
