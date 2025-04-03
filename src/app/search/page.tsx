@@ -23,7 +23,7 @@ export default function Search() {
   };
 
   return (
-    <div className="flex flex-col w-full min-h-screen items-center px-7 sm:px-9 py-6 gap-4 sm:gap-6 bg-gray-50">
+    <div className="flex flex-col w-full min-h-screen items-center px-7 sm:px-12 py-6 gap-4 sm:gap-6 bg-gray-50">
       <SearchBar />
       <FilterOption filter={filter} onChange={handleFilterChange} />
       <div className="flex flex-col w-full gap-2 sm:gap-5">
