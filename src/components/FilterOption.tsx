@@ -13,10 +13,10 @@ const FilterOption = ({ filter, onChange }: FilterOptionProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="flex flex-col w-full px-1 sm:px-2 text-left">
+    <div className="flex flex-col mr-auto px-1 sm:px-2 text-left">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-1 text-lg sm:text-2xl sm:py-1 font-semibold text-gray-800"
+        className="flex items-center gap-1 text-lg sm:text-2xl sm:py-1 font-semibold text-gray-800 cursor-pointer"
       >
         옵션
         <SortIcon className="w-6 h-6 sm:w-7 sm:h-7" isOpen={isOpen} />
