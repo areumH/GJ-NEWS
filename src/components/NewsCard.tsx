@@ -14,7 +14,7 @@ const NewsCard = ({ isTitleOnly }: { isTitleOnly: boolean }) => {
       <div className="w-full text-lg sm:text-2xl text-indigo-800 font-semibold line-clamp-2 leading-snug">
         기사 제목
       </div>
-      {isTitleOnly && (
+      {!isTitleOnly && (
         <div className="w-full sm:text-lg text-gray-700 line-clamp-3 leading-snug">기사 내용</div>
       )}
     </button>

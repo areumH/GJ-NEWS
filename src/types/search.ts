@@ -9,3 +9,9 @@ export interface NewsSearchParams {
   // 'sim' - 정확도 순 정렬
   // 'date' - 날짜 순 정렬
 }
+
+export interface FilterState {
+  sort: 'sim' | 'date';
+  showPositiveOnly: boolean;
+  showTitleOnly: boolean;
+}
