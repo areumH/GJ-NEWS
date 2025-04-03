@@ -2,6 +2,7 @@
 
 import { useSearchParams } from 'next/navigation';
 import SearchBar from '@/components/SearchBar';
+import NewsCard from '@/components/NewsCard';
 
 export default function Search() {
   const searchParams = useSearchParams();
@@ -11,6 +12,10 @@ export default function Search() {
   return (
     <div className="flex flex-col w-full min-h-screen items-center py-6 bg-gray-50">
       <SearchBar />
+      <div className='flex flex-col w-full mt-7 sm:mt-9 gap-2 sm:gap-5'>
+        <NewsCard />
+        <NewsCard />
+      </div>
       페이지: {page}
     </div>
   );

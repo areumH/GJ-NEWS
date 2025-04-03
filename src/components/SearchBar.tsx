@@ -22,7 +22,7 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="flex max-w-5xl w-10/12 h-12 sm:h-16 items-center  rounded-l-full rounded-r-full px-2 sm:px-4  bg-white shadow-md sm:shadow-lg border-2 border-gray-100">
+    <div className="flex w-full h-12 sm:h-16 items-center  rounded-l-full rounded-r-full px-2 sm:px-4 bg-white shadow-md sm:shadow-lg border-2 border-gray-100">
       <button
         onClick={handleSearch}
         className="flex shrink-0 justify-center items-center w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-indigo-200 cursor-pointer"
@@ -34,7 +34,7 @@ const SearchBar = () => {
         placeholder={PLACE_HOLDER.SEARCH}
         onChange={(e) => setKeyword(e.target.value)}
         onKeyDown={handleKeyDown}
-        className="w-full h-full px-5 placeholder-gray-500 text-md sm:text-xl outline-none text-black"
+        className="w-full h-full px-3 sm:px-5 placeholder-gray-500 text-md sm:text-xl outline-none text-black"
       />
     </div>
   );
