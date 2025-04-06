@@ -4,15 +4,18 @@ import { useState } from 'react';
 import { PATH } from '@/constants/path';
 import { PLACE_HOLDER } from '@/constants/messages';
 import { SearchIcon } from '@/components/Icon/icons/SearchIcon';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
-const SearchBar = () => {
+export interface SearchBarProps {
+  keyword?: string;
+}
+
+const SearchBar = ({ keyword }: SearchBarProps) => {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const [keyword, setKeyword] = useState(searchParams.get('query') || '');
+  const [keywordValue, setKeywordValue] = useState(keyword || '');
 
   const handleSearch = () => {
-    router.push(PATH.SEARCH(keyword, 1));
+    router.push(PATH.SEARCH(keywordValue, 1));
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -30,9 +33,9 @@ const SearchBar = () => {
         <SearchIcon className="w-6 h-6 sm:w-8 sm:h-8" />
       </button>
       <input
-        value={keyword}
+        value={keywordValue}
         placeholder={PLACE_HOLDER.SEARCH}
-        onChange={(e) => setKeyword(e.target.value)}
+        onChange={(e) => setKeywordValue(e.target.value)}
         onKeyDown={handleKeyDown}
         className="w-full h-full px-3 sm:px-5 placeholder-gray-500 text-md sm:text-xl outline-none text-black"
       />
