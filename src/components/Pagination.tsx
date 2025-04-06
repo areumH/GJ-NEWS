@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from 'react';
 import { slicePageByLimit } from '@/utils/pagination';
+import { PAGE_GROUP, PAGE_ELEMENT } from '@/constants/pagination';
 import { ChevronLeft } from './Icon/icons/ChevronLeft';
 import { ChevronRight } from './Icon/icons/ChevronRight';
 import { FirstChevronLeft } from './Icon/icons/FirstChevronLeft';
@@ -15,22 +16,22 @@ export interface PaginationProps {
 }
 
 const Pagination = ({ currentPage, total, setPage }: PaginationProps) => {
-  if (total <= 15) return;
+  if (total <= PAGE_ELEMENT) return;
 
-  const totalPage = Math.ceil(total / 15);
+  const totalPage = Math.ceil(total / PAGE_ELEMENT);
   const [currentPageArray, setCurrentPageArray] = useState<number[]>([]);
   const [totalPageArray, setTotalPageArray] = useState<number[][]>([]);
 
   useEffect(() => {
-    if (currentPage % 5 === 0) {
-      setCurrentPageArray(totalPageArray[Math.floor(currentPage / 5) - 1]);
+    if (currentPage % PAGE_GROUP === 0) {
+      setCurrentPageArray(totalPageArray[Math.floor(currentPage / PAGE_GROUP) - 1]);
     } else {
-      setCurrentPageArray(totalPageArray[Math.floor(currentPage / 5)]);
+      setCurrentPageArray(totalPageArray[Math.floor(currentPage / PAGE_GROUP)]);
     }
   }, [currentPage, totalPageArray]);
 
   useEffect(() => {
-    const slicedPages = slicePageByLimit(totalPage, 5);
+    const slicedPages = slicePageByLimit(totalPage, PAGE_GROUP);
     setTotalPageArray(slicedPages);
     setCurrentPageArray(slicedPages[0]);
   }, [totalPage]);
