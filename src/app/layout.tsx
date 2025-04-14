@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { pretendard } from '@/styles/font';
+import ReactQueryProvider from '@/providers/ReactQueryProvider';
 import '@/styles/globals.css';
 
 export const metadata: Metadata = {
@@ -14,7 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${pretendard.className} max-w-[1200px] mx-auto`}>{children}</body>
+      <body className={`${pretendard.className} max-w-[1200px] mx-auto`}>
+        <ReactQueryProvider>{children}</ReactQueryProvider>
+      </body>
     </html>
   );
 }

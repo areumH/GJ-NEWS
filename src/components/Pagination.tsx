@@ -7,7 +7,7 @@ import { PAGE_GROUP, PAGE_ELEMENT } from '@/constants/pagination';
 import { ChevronLeft } from './Icon/icons/ChevronLeft';
 import { ChevronRight } from './Icon/icons/ChevronRight';
 import { FirstChevronLeft } from './Icon/icons/FirstChevronLeft';
-import { LastChevronRight } from './Icon/icons/LastChevronright';
+import { LastChevronRight } from './Icon/icons/LastChevronRight';
 
 export interface PaginationProps {
   currentPage: number;

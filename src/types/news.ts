@@ -7,13 +7,9 @@ export interface NewsItem {
 }
 
 export interface NewsResponse {
-  rss: {
-    channel: {
-      lastBuildDate: string;
-      total: number;
-      start: number;
-      display: number;
-      item: NewsItem[];
-    };
-  };
+  lastBuildDate: string;
+  total: number;
+  start: number;
+  display: number;
+  items: NewsItem[];
 }
