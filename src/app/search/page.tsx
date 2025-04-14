@@ -35,7 +35,7 @@ export default function Search() {
   const { newsList } = useNewsListQuery({
     query,
     display: PAGE_ELEMENT,
-    start: 1,
+    start: PAGE_ELEMENT * (currentPage - 1) + 1,
     sort: filter.sort,
   });
 
@@ -49,7 +49,7 @@ export default function Search() {
         ))}
       </div>
       <div className="flex mt-5">
-        <Pagination currentPage={currentPage} total={100} setPage={onChangePage} />
+        <Pagination currentPage={currentPage} total={newsList?.total ?? 0} setPage={onChangePage} />
       </div>
     </div>
   );

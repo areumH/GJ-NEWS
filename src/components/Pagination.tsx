@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from 'react';
 import { slicePageByLimit } from '@/utils/pagination';
-import { PAGE_GROUP, PAGE_ELEMENT } from '@/constants/pagination';
+import { PAGE_GROUP, PAGE_ELEMENT, MAX_START } from '@/constants/pagination';
 import { ChevronLeft } from './Icon/icons/ChevronLeft';
 import { ChevronRight } from './Icon/icons/ChevronRight';
 import { FirstChevronLeft } from './Icon/icons/FirstChevronLeft';
@@ -16,9 +16,9 @@ export interface PaginationProps {
 }
 
 const Pagination = ({ currentPage, total, setPage }: PaginationProps) => {
-  if (total <= PAGE_ELEMENT) return;
+  if (total <= PAGE_ELEMENT) return null;
 
-  const totalPage = Math.ceil(total / PAGE_ELEMENT);
+  const totalPage = Math.min(Math.ceil(total / PAGE_ELEMENT), Math.ceil(MAX_START / PAGE_ELEMENT));
   const [currentPageArray, setCurrentPageArray] = useState<number[]>([]);
   const [totalPageArray, setTotalPageArray] = useState<number[][]>([]);
 
