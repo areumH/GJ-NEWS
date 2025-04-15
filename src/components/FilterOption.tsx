@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FilterState } from '@/types/search';
 import { SortIcon } from '@/components/Icon/icons/SortIcon';
 import { CheckIcon } from './Icon/icons/CheckIcon';
@@ -13,23 +13,36 @@ export interface FilterOptionProps {
 const FilterOption = ({ filter, onChange }: FilterOptionProps) => {
   const [isSortOpen, setIsSortOpen] = useState(false);
 
+  const handleOptionClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsSortOpen(!isSortOpen);
+  };
+
   const handleSelectedSort = () => {
     onChange('sort', filter.sort === 'sim' ? 'date' : 'sim');
     setIsSortOpen(false);
   };
 
+  const handleOutsideClick = () => {
+    setIsSortOpen(false);
+  };
+
+  useEffect(() => {
+    window.addEventListener('click', handleOutsideClick);
+    return () => {
+      window.removeEventListener('click', handleOutsideClick);
+    };
+  }, []);
+
   return (
     <div className="flex w-full justify-between items-start px-1 sm:px-2 sm:h-20">
       <div className="flex flex-col w-22 sm:w-28 bg-indigo-50 rounded-md">
         <button
-          onClick={() => setIsSortOpen(!isSortOpen)}
+          onClick={handleOptionClick}
           className="flex justify-between items-center px-1.5 sm:px-2 sm:py-1 text-indigo-950 sm:text-xl"
         >
           {filter.sort === 'sim' ? '정확도순' : '최신순'}
-          <SortIcon
-            className='w-4 h-4 sm:w-6 sm:h-6 text-indigo-950'
-            isOpen={isSortOpen}
-          />
+          <SortIcon className="w-4 h-4 sm:w-6 sm:h-6 text-indigo-950" isOpen={isSortOpen} />
         </button>
         {isSortOpen && (
           <button
