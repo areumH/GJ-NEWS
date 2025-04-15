@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { FilterState } from '@/types/search';
 import { SortIcon } from '@/components/Icon/icons/SortIcon';
+import { CheckIcon } from './Icon/icons/CheckIcon';
 
 export interface FilterOptionProps {
   filter: FilterState;
@@ -10,90 +11,70 @@ export interface FilterOptionProps {
 }
 
 const FilterOption = ({ filter, onChange }: FilterOptionProps) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isSortOpen, setIsSortOpen] = useState(false);
+
+  const handleSelectedSort = () => {
+    onChange('sort', filter.sort === 'sim' ? 'date' : 'sim');
+    setIsSortOpen(false);
+  };
 
   return (
-    <div className="flex flex-col mr-auto px-1 sm:px-2 text-left">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-1 text-lg sm:text-2xl sm:py-1 font-semibold text-gray-800 cursor-pointer"
-      >
-        옵션
-        <SortIcon className="w-6 h-6 sm:w-7 sm:h-7" isOpen={isOpen} />
-      </button>
-      {isOpen && (
-        <div className="flex flex-col mt-2 text-lg sm:text-xl">
-          <div className="flex gap-4 sm:gap-6 w-full py-1.5 sm:py-3 border-t-2 border-gray-100">
-            <span>정렬</span>
-            <button
-              onClick={() => {
-                onChange('sort', 'date');
-              }}
-              className={`${
-                filter.sort === 'date' ? 'text-indigo-700 font-semibold' : 'text-gray-600'
+    <div className="flex w-full justify-between items-start px-1 sm:px-2 sm:h-20">
+      <div className="flex flex-col w-22 sm:w-28 bg-indigo-50 rounded-md">
+        <button
+          onClick={() => setIsSortOpen(!isSortOpen)}
+          className="flex justify-between items-center px-1.5 sm:px-2 sm:py-1 text-indigo-950 sm:text-xl"
+        >
+          {filter.sort === 'sim' ? '정확도순' : '최신순'}
+          <SortIcon
+            className='w-4 h-4 sm:w-6 sm:h-6 text-indigo-950'
+            isOpen={isSortOpen}
+          />
+        </button>
+        {isSortOpen && (
+          <button
+            onClick={handleSelectedSort}
+            className="flex items-center px-1.5 sm:px-2 sm:py-1 text-indigo-950 border-t-1 border-t-white sm:text-xl"
+          >
+            {filter.sort === 'sim' ? '최신순' : '정확도순'}
+          </button>
+        )}
+      </div>
+
+      <div className="flex flex-col gap-1 sm:gap-3">
+        <div className="flex justify-between items-center gap-2 sm:gap-4 text-base sm:text-xl">
+          제목만
+          <button
+            className="cursor-pointer"
+            onClick={() => {
+              onChange('showTitleOnly', !filter.showTitleOnly);
+            }}
+          >
+            <CheckIcon
+              className={`w-6 h-6 sm:w-7 sm:h-7 ${
+                filter.showTitleOnly ? 'text-indigo-700' : 'text-gray-400'
               }`}
-            >
-              최신순
-            </button>
-            <button
-              onClick={() => {
-                onChange('sort', 'sim');
-              }}
-              className={`${
-                filter.sort === 'sim' ? 'text-indigo-700 font-semibold' : 'text-gray-600'
-              }`}
-            >
-              정확도순
-            </button>
-          </div>
-          <div className="flex gap-4 sm:gap-6 w-full py-1.5 sm:py-3 border-t-2 border-gray-100">
-            <span>필터</span>
-            <button
-              onClick={() => {
-                onChange('showPositiveOnly', false);
-              }}
-              className={`${
-                !filter.showPositiveOnly ? 'text-indigo-700 font-semibold' : 'text-gray-600'
-              }`}
-            >
-              전체
-            </button>
-            <button
-              onClick={() => {
-                onChange('showPositiveOnly', true);
-              }}
-              className={`${
-                filter.showPositiveOnly ? 'text-indigo-700 font-semibold' : 'text-gray-600'
-              }`}
-            >
-              긍정 뉴스만
-            </button>
-          </div>
-          <div className="flex gap-4 sm:gap-6 w-full py-1.5 sm:py-3 border-t-2 border-gray-100">
-            <span>표시</span>
-            <button
-              onClick={() => {
-                onChange('showTitleOnly', false);
-              }}
-              className={`${
-                !filter.showTitleOnly ? 'text-indigo-700 font-semibold' : 'text-gray-600'
-              }`}
-            >
-              내용 포함
-            </button>
-            <button
-              onClick={() => {
-                onChange('showTitleOnly', true);
-              }}
-              className={`${
-                filter.showTitleOnly ? 'text-indigo-700 font-semibold' : 'text-gray-600'
-              }`}
-            >
-              제목만
-            </button>
-          </div>
+              isChecked={filter.showTitleOnly}
+            />
+          </button>
         </div>
-      )}
+        <div className="flex justify-between items-center gap-2 sm:gap-4 text-base sm:text-xl">
+          긍정 뉴스만
+          <button
+            className="cursor-pointer"
+            onClick={() => {
+              onChange('showPositiveOnly', !filter.showPositiveOnly);
+            }}
+          >
+            <CheckIcon
+              className={`w-6 h-6 sm:w-7 sm:h-7 ${
+                filter.showPositiveOnly ? 'text-indigo-700' : 'text-gray-400'
+              }`}
+              isChecked={filter.showPositiveOnly}
+            />
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
