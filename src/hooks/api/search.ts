@@ -4,10 +4,10 @@ import { NewsSearchParams } from '@/types/search';
 import { getNewsResult } from '@/api/search';
 
 export const useNewsListQuery = (params: NewsSearchParams) => {
-  const { data: newsList } = useQuery<NewsResponse>({
+  const { data: newsList, isLoading } = useQuery<NewsResponse>({
     queryKey: ['news', params.query, params.start, params.sort],
     queryFn: () => getNewsResult(params.query, params.display, params.start, params.sort),
   });
 
-  return { newsList };
+  return { newsList, isLoading };
 };

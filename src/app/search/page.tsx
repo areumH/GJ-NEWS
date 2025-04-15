@@ -10,6 +10,7 @@ import NewsCard from '@/components/NewsCard';
 import FilterOption from '@/components/FilterOption';
 import Pagination from '@/components/Pagination';
 import { useNewsListQuery } from '@/hooks/api/search';
+import { SpinnerIcon } from '@/components/Icon/icons/SpinnerIcon';
 
 export default function Search() {
   const router = useRouter();
@@ -32,7 +33,7 @@ export default function Search() {
     setFilter((prev) => ({ ...prev, [key]: value }));
   };
 
-  const { newsList } = useNewsListQuery({
+  const { newsList, isLoading } = useNewsListQuery({
     query,
     display: PAGE_ELEMENT,
     start: PAGE_ELEMENT * (currentPage - 1) + 1,
@@ -43,14 +44,29 @@ export default function Search() {
     <div className="flex flex-col w-full min-h-screen items-center px-7 sm:px-12 py-6 gap-5 sm:gap-6 bg-gray-50">
       <SearchBar keyword={query} />
       <FilterOption filter={filter} onChange={handleFilterChange} />
-      <div className="flex flex-col w-full gap-2 sm:gap-5">
-        {newsList?.items.map((news) => (
-          <NewsCard key={news.title} news={news} isTitleOnly={filter.showTitleOnly} />
-        ))}
-      </div>
-      <div className="flex mt-5">
-        <Pagination currentPage={currentPage} total={newsList?.total ?? 0} setPage={onChangePage} />
-      </div>
+      {isLoading ? (
+        <div className="flex w-full justify-center items-center mt-52 sm:mt-44">
+          <SpinnerIcon
+            className="w-10 h-10 text-indigo-800 animate-spin"
+            style={{ animationDuration: '1.5s' }}
+          />
+        </div>
+      ) : (
+        <div className="flex flex-col items-center gap-5 sm:gap-7">
+          <div className="flex flex-col w-full gap-2 sm:gap-5">
+            {newsList?.items.map((news) => (
+              <NewsCard key={news.title} news={news} isTitleOnly={filter.showTitleOnly} />
+            ))}
+          </div>
+          <div className="flex mt-5">
+            <Pagination
+              currentPage={currentPage}
+              total={newsList?.total ?? 0}
+              setPage={onChangePage}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
