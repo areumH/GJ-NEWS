@@ -9,3 +9,11 @@ export const axiosNaverInstance = axios.create({
   },
   timeout: AXIOS.TIMEOUT,
 });
+
+export const axiosGoogleInstance = axios.create({
+  baseURL: '/google-api',
+  headers: {
+    'Content-Type': 'application/json; charset=utf-8',
+  },
+  timeout: AXIOS.TIMEOUT,
+});

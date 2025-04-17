@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
         source: '/naver-api/:path*',
         destination: 'https://openapi.naver.com/:path*',
       },
+      {
+        source: '/google-api/:path*',
+        destination: 'https://language.googleapis.com/:path*',
+      },
     ];
   },
 };
