@@ -6,26 +6,26 @@ import { isPositive } from '@/utils/validator';
 import { useAnalyzeSentiment } from '@/hooks/api/sentiment';
 
 export interface NewsCardProps {
-  news: NewsItem;
+  news?: NewsItem;
   isTitleOnly: boolean;
   isPositiveOnly: boolean;
 }
 
 const NewsCard = ({ news, isTitleOnly, isPositiveOnly }: NewsCardProps) => {
-  const newsContent = `${news.title} ${news.description}`;
+  const newsContent = `${news?.title} ${news?.description}`;
   const { mutation } = useAnalyzeSentiment(newsContent);
 
   useEffect(() => {
-    if (mutation.status === 'idle') {
+    if (mutation.status === 'idle' && !!newsContent.trim()) {
       mutation.mutate();
     }
-  }, [mutation]);
+  }, [mutation, newsContent]);
 
   const sentimentScore = mutation.data?.documentSentiment.score;
   const isVisible: boolean = isPositiveOnly ? isPositive(sentimentScore || 0) : true;
 
   const handleNewsCard = () => {
-    if (isVisible) window.location.href = `${news.link}`;
+    if (isVisible) window.location.href = `${news?.link}`;
   };
 
   return (
@@ -33,7 +33,18 @@ const NewsCard = ({ news, isTitleOnly, isPositiveOnly }: NewsCardProps) => {
       onClick={handleNewsCard}
       className="flex flex-col w-full p-5 sm:p-7 text-left bg-white rounded-lg outline-1 sm:hover:outline-3 outline-gray-200  hover:outline-indigo-100 cursor-pointer"
     >
-      {isVisible ? (
+      {mutation.isPending || !news ? (
+        <div className="flex w-full h-26 justify-center items-center">
+          <div className="relative w-6 h-6 sm:w-7 sm:h-7">
+            <Image
+              src="/images/loading.gif"
+              alt="로딩 중"
+              fill
+              className="object-contain"
+            />
+          </div>
+        </div>
+      ) : isVisible ? (
         <div className="flex flex-col w-full gap-1">
           <div className="w-full text-sm sm:text-lg text-gray-400">{formatDate(news.pubDate)}</div>
           <div
@@ -51,12 +62,7 @@ const NewsCard = ({ news, isTitleOnly, isPositiveOnly }: NewsCardProps) => {
         <div className="flex w-full h-26 justify-center items-center">
           <div className="flex flex-col items-center gap-1.5">
             <div className="relative w-8 h-8 sm:w-11 sm:h-11">
-              <Image
-                src="/images/devil.png"
-                alt="부정 뉴스"
-                layout="fill"
-                className="object-contain"
-              />
+              <Image src="/images/devil.png" alt="부정 뉴스" fill className="object-contain" />
             </div>
             <p className="text-gray-500 sm:text-lg">부정 뉴스입니다 !</p>
           </div>
