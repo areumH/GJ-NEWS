@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { NewsItem } from '@/types/news';
 import { formatDate } from '@/utils/date';
 import { isPositive } from '@/utils/validator';
+import { MESSAGE } from '@/constants/messages';
 import { useAnalyzeSentiment } from '@/hooks/api/sentiment';
 
 export interface NewsCardProps {
@@ -36,12 +37,7 @@ const NewsCard = ({ news, isTitleOnly, isPositiveOnly }: NewsCardProps) => {
       {mutation.isPending || !news ? (
         <div className="flex w-full h-26 justify-center items-center">
           <div className="relative w-6 h-6 sm:w-7 sm:h-7">
-            <Image
-              src="/images/loading.gif"
-              alt="로딩 중"
-              fill
-              className="object-contain"
-            />
+            <Image src="/images/loading.gif" alt="로딩 중" fill className="object-contain" />
           </div>
         </div>
       ) : isVisible ? (
@@ -64,7 +60,7 @@ const NewsCard = ({ news, isTitleOnly, isPositiveOnly }: NewsCardProps) => {
             <div className="relative w-8 h-8 sm:w-11 sm:h-11">
               <Image src="/images/devil.png" alt="부정 뉴스" fill className="object-contain" />
             </div>
-            <p className="text-gray-500 sm:text-lg">부정 뉴스입니다 !</p>
+            <p className="text-gray-500 sm:text-lg">{MESSAGE.NEGATIVE}</p>
           </div>
         </div>
       )}
