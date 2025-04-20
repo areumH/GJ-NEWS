@@ -5,3 +5,8 @@ export const PLACE_HOLDER = {
 export const MESSAGE = {
   NEGATIVE: '부정 뉴스입니다 !',
 };
+
+export const IMAGE_ALTS = {
+  LOADING: '로딩 중',
+  NEGATIVE: '부정 뉴스',
+};
