@@ -52,10 +52,15 @@ export default function Search() {
           />
         </div>
       ) : (
-        <div className="flex flex-col items-center gap-5 sm:gap-7">
+        <div className="flex flex-col w-full items-center gap-5 sm:gap-7">
           <div className="flex flex-col w-full gap-2 sm:gap-5">
             {newsList?.items.map((news) => (
-              <NewsCard key={news.title} news={news} isTitleOnly={filter.showTitleOnly} />
+              <NewsCard
+                key={news.title}
+                news={news}
+                isTitleOnly={filter.showTitleOnly}
+                isPositiveOnly={filter.showPositiveOnly}
+              />
             ))}
           </div>
           <div className="flex mt-5">
