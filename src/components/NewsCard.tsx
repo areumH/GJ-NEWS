@@ -1,6 +1,9 @@
+import { useEffect } from 'react';
 import Image from 'next/image';
 import { NewsItem } from '@/types/news';
 import { formatDate } from '@/utils/date';
+import { isPositive } from '@/utils/validator';
+import { useAnalyzeSentiment } from '@/hooks/api/sentiment';
 
 export interface NewsCardProps {
   news: NewsItem;
@@ -9,11 +12,20 @@ export interface NewsCardProps {
 }
 
 const NewsCard = ({ news, isTitleOnly, isPositiveOnly }: NewsCardProps) => {
-  const isVisible: boolean = isPositiveOnly;
-  // const newsContent = `${news.title} ${news.description}`;
+  const newsContent = `${news.title} ${news.description}`;
+  const { mutation } = useAnalyzeSentiment(newsContent);
+
+  useEffect(() => {
+    if (mutation.status === 'idle') {
+      mutation.mutate();
+    }
+  }, [mutation]);
+
+  const sentimentScore = mutation.data?.documentSentiment.score;
+  const isVisible: boolean = isPositiveOnly ? isPositive(sentimentScore || 0) : true;
 
   const handleNewsCard = () => {
-    window.location.href = `${news.link}`;
+    if (isVisible) window.location.href = `${news.link}`;
   };
 
   return (
