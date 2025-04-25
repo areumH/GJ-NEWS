@@ -11,6 +11,7 @@ import FilterOption from '@/components/FilterOption';
 import Pagination from '@/components/Pagination';
 import { useNewsListQuery } from '@/hooks/api/search';
 import { SpinnerIcon } from '@/components/Icon/icons/SpinnerIcon';
+import NoResultMessage from '@/components/NoResultMessage';
 
 export default function Search() {
   const router = useRouter();
@@ -45,31 +46,39 @@ export default function Search() {
       <SearchBar keyword={query} />
       <FilterOption filter={filter} onChange={handleFilterChange} />
       {isLoading ? (
-        <div className="flex w-full justify-center items-center mt-52 sm:mt-44">
+        <div className="flex w-full justify-center items-center mt-50 sm:mt-40">
           <SpinnerIcon
             className="w-10 h-10 text-indigo-800 animate-spin"
             style={{ animationDuration: '1.5s' }}
           />
         </div>
       ) : (
-        <div className="flex flex-col w-full items-center gap-5 sm:gap-7">
-          <div className="flex flex-col w-full gap-2 sm:gap-5">
-            {newsList?.items.map((news) => (
-              <NewsCard
-                key={news.title}
-                news={news}
-                isTitleOnly={filter.showTitleOnly}
-                isPositiveOnly={filter.showPositiveOnly}
-              />
-            ))}
-          </div>
-          <div className="flex mt-5">
-            <Pagination
-              currentPage={currentPage}
-              total={newsList?.total ?? 0}
-              setPage={onChangePage}
-            />
-          </div>
+        <div>
+          {newsList?.items?.length === 0 ? (
+            <div className="flex w-full justify-center items-center mt-50 sm:mt-40">
+              <NoResultMessage keyword={query} />
+            </div>
+          ) : (
+            <div className="flex flex-col w-full items-center gap-5 sm:gap-7">
+              <div className="flex flex-col w-full gap-2 sm:gap-5">
+                {newsList?.items.map((news) => (
+                  <NewsCard
+                    key={news.title}
+                    news={news}
+                    isTitleOnly={filter.showTitleOnly}
+                    isPositiveOnly={filter.showPositiveOnly}
+                  />
+                ))}
+              </div>
+              <div className="flex mt-5">
+                <Pagination
+                  currentPage={currentPage}
+                  total={newsList?.total ?? 0}
+                  setPage={onChangePage}
+                />
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
