@@ -26,7 +26,8 @@ const NewsCard = ({ news, isTitleOnly, isPositiveOnly }: NewsCardProps) => {
   const isVisible: boolean = isPositiveOnly ? isPositive(sentimentScore || 0) : true;
 
   const handleNewsCard = () => {
-    if (isVisible) window.location.href = `${news?.link}`;
+    if (!isVisible) return;
+    window.location.href = `${news?.link}`;
   };
 
   return (
