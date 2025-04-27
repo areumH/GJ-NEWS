@@ -7,7 +7,7 @@ import { CheckIcon } from './Icon/icons/CheckIcon';
 
 export interface FilterOptionProps {
   filter: FilterState;
-  onChange: <K extends keyof FilterState>(key: K, value: FilterState[K]) => void;
+  onChange?: <K extends keyof FilterState>(key: K, value: FilterState[K]) => void;
 }
 
 const FilterOption = ({ filter, onChange }: FilterOptionProps) => {
@@ -19,7 +19,7 @@ const FilterOption = ({ filter, onChange }: FilterOptionProps) => {
   };
 
   const handleSelectedSort = () => {
-    onChange('sort', filter.sort === 'sim' ? 'date' : 'sim');
+    onChange?.('sort', filter.sort === 'sim' ? 'date' : 'sim');
     setIsSortOpen(false);
   };
 
@@ -60,7 +60,7 @@ const FilterOption = ({ filter, onChange }: FilterOptionProps) => {
           <button
             className="cursor-pointer"
             onClick={() => {
-              onChange('showTitleOnly', !filter.showTitleOnly);
+              onChange?.('showTitleOnly', !filter.showTitleOnly);
             }}
           >
             <CheckIcon
@@ -76,7 +76,7 @@ const FilterOption = ({ filter, onChange }: FilterOptionProps) => {
           <button
             className="cursor-pointer"
             onClick={() => {
-              onChange('showPositiveOnly', !filter.showPositiveOnly);
+              onChange?.('showPositiveOnly', !filter.showPositiveOnly);
             }}
           >
             <CheckIcon

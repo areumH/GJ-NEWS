@@ -5,12 +5,12 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { FilterState } from '@/types/search';
 import { PATH } from '@/constants/path';
 import { PAGE_ELEMENT } from '@/constants/pagination';
+import { useNewsListQuery } from '@/hooks/api/search';
+import { SpinnerIcon } from '@/components/Icon/icons/SpinnerIcon';
 import SearchBar from '@/components/SearchBar';
 import NewsCard from '@/components/NewsCard';
 import FilterOption from '@/components/FilterOption';
 import Pagination from '@/components/Pagination';
-import { useNewsListQuery } from '@/hooks/api/search';
-import { SpinnerIcon } from '@/components/Icon/icons/SpinnerIcon';
 import NoResultMessage from '@/components/NoResultMessage';
 
 export default function Search() {
