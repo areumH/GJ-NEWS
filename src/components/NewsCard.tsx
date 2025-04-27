@@ -24,6 +24,7 @@ const NewsCard = ({ news, isTitleOnly, isPositiveOnly }: NewsCardProps) => {
 
   const sentimentScore = mutation.data?.documentSentiment.score;
   const isVisible: boolean = isPositiveOnly ? isPositive(sentimentScore || 0) : true;
+  const isLoading = !news || (mutation.isPending && isPositiveOnly);
 
   const handleNewsCard = () => {
     if (!isVisible) return;
@@ -35,7 +36,7 @@ const NewsCard = ({ news, isTitleOnly, isPositiveOnly }: NewsCardProps) => {
       onClick={handleNewsCard}
       className="flex flex-col w-full p-5 sm:p-7 text-left bg-white rounded-lg outline-1 sm:hover:outline-3 outline-gray-200  hover:outline-indigo-100 cursor-pointer"
     >
-      {!news || mutation.isPending ? (
+      {isLoading ? (
         <div className="flex w-full h-26 justify-center items-center">
           <div className="relative w-6 h-6 sm:w-7 sm:h-7">
             <Image
