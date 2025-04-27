@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import Image from 'next/image';
 import { NewsItem } from '@/types/news';
+import { IMAGE_ALTS, MESSAGE } from '@/constants/messages';
 import { formatDate } from '@/utils/date';
 import { isPositive } from '@/utils/validator';
-import { IMAGE_ALTS, MESSAGE } from '@/constants/messages';
 import { useAnalyzeSentiment } from '@/hooks/api/sentiment';
 
 export interface NewsCardProps {
@@ -35,7 +35,7 @@ const NewsCard = ({ news, isTitleOnly, isPositiveOnly }: NewsCardProps) => {
       onClick={handleNewsCard}
       className="flex flex-col w-full p-5 sm:p-7 text-left bg-white rounded-lg outline-1 sm:hover:outline-3 outline-gray-200  hover:outline-indigo-100 cursor-pointer"
     >
-      {mutation.isPending || !news ? (
+      {!news || mutation.isPending ? (
         <div className="flex w-full h-26 justify-center items-center">
           <div className="relative w-6 h-6 sm:w-7 sm:h-7">
             <Image

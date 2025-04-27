@@ -53,7 +53,7 @@ export default function Search() {
           />
         </div>
       ) : (
-        <div>
+        <div className="w-full">
           {newsList?.items?.length === 0 ? (
             <div className="flex w-full justify-center items-center mt-50 sm:mt-40">
               <NoResultMessage keyword={query} />
