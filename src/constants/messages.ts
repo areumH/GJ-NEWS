@@ -15,3 +15,10 @@ export const SEARCH_RESULT = {
   NONE: '에 대한 검색 결과가 없습니다.',
   CHECK_KEYWORD: '검색어를 다시 확인해주세요!',
 };
+
+export const FILTER_OPTION = {
+  SIM: '정확도순',
+  DATE: '최신순',
+  TITLE: '제목만',
+  POSITIVE: '긍정 뉴스만',
+};

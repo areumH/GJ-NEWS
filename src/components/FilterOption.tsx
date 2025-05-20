@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { FilterState } from '@/types/search';
+import { FILTER_OPTION } from '@/constants/messages';
 import { SortIcon } from '@/components/Icon/icons/SortIcon';
 import { CheckIcon } from './Icon/icons/CheckIcon';
 
@@ -41,7 +42,7 @@ const FilterOption = ({ filter, onChange }: FilterOptionProps) => {
           onClick={handleOptionClick}
           className="flex justify-between items-center px-1.5 sm:px-2 sm:py-1 text-indigo-950 sm:text-xl"
         >
-          {filter.sort === 'sim' ? '정확도순' : '최신순'}
+          {filter.sort === 'sim' ? FILTER_OPTION.SIM : FILTER_OPTION.DATE}
           <SortIcon className="w-4 h-4 sm:w-6 sm:h-6 text-indigo-950" isOpen={isSortOpen} />
         </button>
         {isSortOpen && (
@@ -49,14 +50,14 @@ const FilterOption = ({ filter, onChange }: FilterOptionProps) => {
             onClick={handleSelectedSort}
             className="flex items-center px-1.5 sm:px-2 sm:py-1 text-indigo-950 border-t-1 border-t-white sm:text-xl"
           >
-            {filter.sort === 'sim' ? '최신순' : '정확도순'}
+            {filter.sort === 'sim' ? FILTER_OPTION.DATE : FILTER_OPTION.SIM}
           </button>
         )}
       </div>
 
       <div className="flex flex-col gap-1 sm:gap-3">
         <div className="flex justify-between items-center gap-2 sm:gap-4 text-base sm:text-xl">
-          제목만
+          {FILTER_OPTION.TITLE}
           <button
             className="cursor-pointer"
             onClick={() => {
@@ -72,7 +73,7 @@ const FilterOption = ({ filter, onChange }: FilterOptionProps) => {
           </button>
         </div>
         <div className="flex justify-between items-center gap-2 sm:gap-4 text-base sm:text-xl">
-          긍정 뉴스만
+          {FILTER_OPTION.POSITIVE}
           <button
             className="cursor-pointer"
             onClick={() => {
