@@ -1,5 +1,4 @@
 export const PATH = {
-  SEARCH: (query: string, page: number) =>
-    `/search?query=${encodeURIComponent(query)}&page=${page}`,
+  SEARCH: (query: string) => `/search?query=${encodeURIComponent(query)}`,
   NEWS: (title: string) => `/news/${encodeURIComponent(title)}`,
 };

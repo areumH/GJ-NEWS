@@ -6,7 +6,7 @@ export interface NoResultMessageProps {
 
 const NoResultMessage = ({ keyword }: NoResultMessageProps) => {
   return (
-    <div className="flex flex-col w-full items-center gap-0.5 sm:text-xl">
+    <div className="flex flex-col w-full items-center gap-0.5 sm:text-xl text-gray-700">
       <div className="text-center break-words">
         <span className="text-indigo-800">&apos;{keyword}&apos;</span>
         {SEARCH_RESULT.NONE}

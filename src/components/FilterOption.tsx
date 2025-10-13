@@ -1,10 +1,15 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { FilterState } from '@/types/search';
 import { FILTER_OPTION } from '@/constants/messages';
 import { SortIcon } from '@/components/Icon/SortIcon';
 import { CheckIcon } from './Icon/CheckIcon';
+
+export interface FilterState {
+  sort: 'sim' | 'date';
+  showPositiveOnly: boolean;
+  showTitleOnly: boolean;
+}
 
 export interface FilterOptionProps {
   filter: FilterState;

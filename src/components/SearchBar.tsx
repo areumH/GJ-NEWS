@@ -15,7 +15,7 @@ const SearchBar = ({ keyword }: SearchBarProps) => {
   const [keywordValue, setKeywordValue] = useState(keyword || '');
 
   const handleSearch = () => {
-    router.push(PATH.SEARCH(keywordValue, 1));
+    router.push(PATH.SEARCH(keywordValue));
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
