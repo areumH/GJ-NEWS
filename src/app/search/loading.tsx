@@ -1,5 +1,5 @@
 import { FilterState } from '@/types/search';
-import { SpinnerIcon } from '@/components/Icon/icons/SpinnerIcon';
+import { SpinnerIcon } from '@/components/Icon/SpinnerIcon';
 import SearchBar from '@/components/SearchBar';
 import FilterOption from '@/components/FilterOption';
 
@@ -15,10 +15,7 @@ export default function Search() {
       <SearchBar keyword={''} />
       <FilterOption filter={filter} />
       <div className="flex w-full justify-center items-center mt-50 sm:mt-40">
-        <SpinnerIcon
-          className="w-10 h-10 text-indigo-800 animate-spin"
-          style={{ animationDuration: '1.5s' }}
-        />
+        <SpinnerIcon className="w-10 h-10 text-indigo-800 animate-spin" style={{ animationDuration: '1.5s' }} />
       </div>
     </div>
   );

@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${pretendard.className} max-w-[1200px] mx-auto`}>
+      <body className={`${pretendard.className} max-w-3xl mx-auto`}>
         <ReactQueryProvider>{children}</ReactQueryProvider>
       </body>
     </html>

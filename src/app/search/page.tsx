@@ -6,7 +6,7 @@ import { FilterState } from '@/types/search';
 import { PATH } from '@/constants/path';
 import { PAGE_ELEMENT } from '@/constants/pagination';
 import { useNewsListQuery } from '@/hooks/api/search';
-import { SpinnerIcon } from '@/components/Icon/icons/SpinnerIcon';
+import { SpinnerIcon } from '@/components/Icon/SpinnerIcon';
 import SearchBar from '@/components/SearchBar';
 import NewsCard from '@/components/NewsCard';
 import FilterOption from '@/components/FilterOption';
@@ -42,15 +42,12 @@ export default function Search() {
   });
 
   return (
-    <div className="flex flex-col w-full min-h-screen items-center px-7 sm:px-12 py-6 gap-5 sm:gap-6 bg-gray-50">
+    <div className="flex flex-col w-full min-h-screen items-center px-7 sm:px-12 py-6 gap-5 sm:gap-6">
       <SearchBar keyword={query} />
       <FilterOption filter={filter} onChange={handleFilterChange} />
       {isLoading ? (
         <div className="flex w-full justify-center items-center mt-50 sm:mt-40">
-          <SpinnerIcon
-            className="w-10 h-10 text-indigo-800 animate-spin"
-            style={{ animationDuration: '1.5s' }}
-          />
+          <SpinnerIcon className="w-10 h-10 text-indigo-800 animate-spin" style={{ animationDuration: '1.5s' }} />
         </div>
       ) : (
         <div className="w-full">
@@ -61,9 +58,9 @@ export default function Search() {
           ) : (
             <div className="flex flex-col w-full items-center gap-5 sm:gap-7">
               <div className="flex flex-col w-full gap-2 sm:gap-5">
-                {newsList?.items.map((news) => (
+                {newsList?.items.map((news, idx) => (
                   <NewsCard
-                    key={news.title}
+                    key={`${news.title}-${idx}`}
                     news={news}
                     isTitleOnly={filter.showTitleOnly}
                     isPositiveOnly={filter.showPositiveOnly}
@@ -71,11 +68,7 @@ export default function Search() {
                 ))}
               </div>
               <div className="flex mt-5">
-                <Pagination
-                  currentPage={currentPage}
-                  total={newsList?.total ?? 0}
-                  setPage={onChangePage}
-                />
+                <Pagination currentPage={currentPage} total={newsList?.total ?? 0} setPage={onChangePage} />
               </div>
             </div>
           )}

@@ -4,10 +4,10 @@
 import { useEffect, useState } from 'react';
 import { slicePageByLimit } from '@/utils/pagination';
 import { PAGE_GROUP, PAGE_ELEMENT, MAX_START } from '@/constants/pagination';
-import { ChevronLeft } from './Icon/icons/ChevronLeft';
-import { ChevronRight } from './Icon/icons/ChevronRight';
-import { FirstChevronLeft } from './Icon/icons/FirstChevronLeft';
-import { LastChevronRight } from './Icon/icons/LastChevronRight';
+import { ChevronLeft } from './Icon/ChevronLeft';
+import { ChevronRight } from './Icon/ChevronRight';
+import { FirstChevronLeft } from './Icon/FirstChevronLeft';
+import { LastChevronRight } from './Icon/LastChevronRight';
 
 export interface PaginationProps {
   currentPage: number;
