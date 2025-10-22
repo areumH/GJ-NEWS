@@ -1,6 +1,6 @@
-import { FilterState } from '@/types/search';
 import { SpinnerIcon } from '@/components/Icon/SpinnerIcon';
 import SearchBar from '@/components/SearchBar';
+import { FilterState } from '@/components/FilterOption';
 import FilterOption from '@/components/FilterOption';
 
 export default function Search() {

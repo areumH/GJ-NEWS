@@ -55,40 +55,38 @@ export default function Search() {
 
   const allNews = data?.pages.flatMap((page) => page.items) ?? [];
   const totalResults = data?.pages[0]?.total ?? 0;
-
   return (
-    <div className="flex flex-col w-full min-h-screen items-center px-7 sm:px-12 py-6 gap-5 sm:gap-6">
-      <SearchBar keyword={query} />
-      <FilterOption filter={filter} onChange={handleFilterChange} />
+    <div className="flex flex-col w-full min-h-screen items-center gap-5 sm:gap-6">
+      <div className="sticky top-0 z-50 w-full bg-white pt-6 pb-2">
+        <div className="px-7 sm:px-12 flex flex-col w-full gap-5">
+          <SearchBar keyword={query} />
+          <FilterOption filter={filter} onChange={handleFilterChange} />
+        </div>
+      </div>
 
-      {isLoading ? (
-        <div className="flex w-full justify-center items-center mt-50 sm:mt-40">
-          <SpinnerIcon className="w-10 h-10 text-indigo-400 animate-spin" style={{ animationDuration: '1.5s' }} />
-        </div>
-      ) : (
-        <div className="w-full">
-          {totalResults === 0 ? (
-            <div className="flex w-full justify-center items-center mt-50 sm:mt-40">
-              <NoResultMessage keyword={query} />
-            </div>
-          ) : (
-            <div className="flex flex-col w-full items-center gap-5 sm:gap-7">
-              <NewsList news={allNews} filter={filter} />
-              
-              {hasNextPage && (
-                <div ref={observerRef} className="flex w-full justify-center items-center py-4">
-                  {isFetchingNextPage && (
-                    <SpinnerIcon
-                      className="w-8 h-8 text-indigo-400 animate-spin"
-                      style={{ animationDuration: '1.5s' }}
-                    />
-                  )}
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-      )}
+      <div className="flex flex-col w-full px-7 sm:px-12">
+        {isLoading ? (
+          <div className="flex w-full justify-center items-center mt-50 sm:mt-40">
+            <SpinnerIcon className="w-10 h-10 text-indigo-400 animate-spin" style={{ animationDuration: '1.5s' }} />
+          </div>
+        ) : totalResults === 0 ? (
+          <div className="flex w-full justify-center items-center mt-50 sm:mt-40">
+            <NoResultMessage keyword={query} />
+          </div>
+        ) : (
+          <div className="flex flex-col w-full items-center gap-5 sm:gap-7">
+            <NewsList news={allNews} filter={filter} />
+
+            {hasNextPage && (
+              <div ref={observerRef} className="flex w-full justify-center items-center py-4">
+                {isFetchingNextPage && (
+                  <SpinnerIcon className="w-8 h-8 text-indigo-400 animate-spin" style={{ animationDuration: '1.5s' }} />
+                )}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
