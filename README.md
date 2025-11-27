@@ -1,3 +1,5 @@
+![image](https://github.com/user-attachments/assets/dade2290-d7bc-4abf-ba2c-6d06c4bf2069)
+
 # GJ-NEWS
 
 > 긍정 뉴스만 뽑아보자! 😊
