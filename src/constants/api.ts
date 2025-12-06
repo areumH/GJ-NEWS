@@ -12,5 +12,5 @@ export const END_POINT = {
 };
 
 export const AXIOS = {
-  TIMEOUT: 5000,
+  TIMEOUT: 10000,
 };
