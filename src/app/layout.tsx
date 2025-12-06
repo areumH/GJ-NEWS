@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Toaster } from 'sonner';
 import { pretendard } from '@/styles/font';
 import ReactQueryProvider from '@/providers/ReactQueryProvider';
 import '@/styles/globals.css';
@@ -17,6 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${pretendard.className} max-w-3xl mx-auto`}>
         <ReactQueryProvider>{children}</ReactQueryProvider>
+        <Toaster position="top-center" closeButton richColors />
       </body>
     </html>
   );
