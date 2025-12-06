@@ -1,11 +1,12 @@
 import axios from 'axios';
 import { AXIOS } from '@/constants/api';
+import { ENV } from '@/config/env';
 
 export const axiosNaverInstance = axios.create({
   baseURL: '/naver-api',
   headers: {
-    'X-Naver-Client-Id': process.env.NEXT_PUBLIC_NAVER_API_CLIENT,
-    'X-Naver-Client-Secret': process.env.NEXT_PUBLIC_NAVER_API_CLIENT_KEY,
+    'X-Naver-Client-Id': ENV.NAVER_CLIENT_ID,
+    'X-Naver-Client-Secret': ENV.NAVER_CLIENT_SECRET,
   },
   timeout: AXIOS.TIMEOUT,
 });
