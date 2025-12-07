@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { PAGE_ELEMENT } from '@/constants/pagination';
+import { PAGE_ELEMENT, OBSERVER_THRESHOLD } from '@/constants/pagination';
 import { useNewsListQuery } from '@/hooks/api/search';
 import { SpinnerIcon } from '@/components/Icon/SpinnerIcon';
 import { FilterState } from '@/components/FilterOption';
@@ -45,7 +45,7 @@ export default function Search() {
           fetchNextPage();
         }
       },
-      { threshold: 0.1 }
+      { threshold: OBSERVER_THRESHOLD }
     );
 
     observer.observe(observerRef.current);
