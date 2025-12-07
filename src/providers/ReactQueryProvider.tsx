@@ -1,10 +1,35 @@
 'use client';
 
 import { useState } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider, QueryCache, MutationCache } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 export default function ReactQueryProvider({ children }: { children: React.ReactNode }) {
-  const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        queryCache: new QueryCache({
+          onError: () => {
+            toast.error('요청 처리 중 오류가 발생했습니다.', {
+              id: 'global-error',
+            });
+          },
+        }),
+        mutationCache: new MutationCache({
+          onError: () => {
+            toast.error('요청 처리 중 오류가 발생했습니다.', {
+              id: 'global-error',
+            });
+          },
+        }),
+        defaultOptions: {
+          queries: {
+            retry: 1,
+            refetchOnWindowFocus: false,
+          },
+        },
+      })
+  );
 
   return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 }
