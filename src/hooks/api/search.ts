@@ -1,18 +1,23 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, InfiniteData } from '@tanstack/react-query';
 import { NewsSearchParams } from '@/types/search';
 import { NewsResponse } from '@/types/news';
 import { getNewsResult } from '@/api/search';
 
-export const useNewsListQuery = ({ query, display, sort }: NewsSearchParams) => {
+export const useNewsListQuery = ({
+  query,
+  display,
+  sort,
+  initialData,
+}: NewsSearchParams & { initialData?: NewsResponse }) => {
   const {
     data, // 모든 데이터 배열
     isLoading, // 첫 로딩
     fetchNextPage, // 다음 페이지를 불러오는 함수
     hasNextPage, // 다은 페이지 유무 여부
     isFetchingNextPage, // 다음 페이지를 불러오는 중
-  } = useInfiniteQuery<NewsResponse>({
+  } = useInfiniteQuery<NewsResponse, Error, InfiniteData<NewsResponse>, string[], number>({
     queryKey: ['news', query, sort],
-    queryFn: ({ pageParam = 1 }) => getNewsResult(query, display, pageParam as number, sort),
+    queryFn: ({ pageParam = 1 }) => getNewsResult(query, display, pageParam, sort),
     getNextPageParam: (lastPage, allPages) => {
       // lastPage: 최근에 불러온 마지막 페이지 응답 , allPages: 지금까지 불러온 페이지 배열
       const nextStart = allPages.length * display + 1;
@@ -23,6 +28,9 @@ export const useNewsListQuery = ({ query, display, sort }: NewsSearchParams) => 
       return nextStart; // 다음 pageParam 값
     },
     initialPageParam: 1,
+    initialData: initialData ? { pages: [initialData], pageParams: [1] } : undefined,
+    initialDataUpdatedAt: initialData ? Date.now() : undefined,
+    staleTime: 30_000,
     enabled: !!query,
   });
 

@@ -8,7 +8,4 @@ export const ENV = {
   // Naver API
   NAVER_CLIENT_ID: process.env.NEXT_PUBLIC_NAVER_API_CLIENT || '',
   NAVER_CLIENT_SECRET: process.env.NEXT_PUBLIC_NAVER_API_CLIENT_KEY || '',
-
-  // Google API
-  GOOGLE_API_KEY: process.env.NEXT_PUBLIC_GOOGLE_API_KEY || '',
 } as const;
