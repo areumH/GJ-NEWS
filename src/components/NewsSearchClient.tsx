@@ -21,29 +21,27 @@ interface NewsSearchClientProps {
 
 const NewsSearchClient = ({ query, sort, initialData }: NewsSearchClientProps) => {
   const router = useRouter();
+  const observerRef = useRef<HTMLDivElement>(null);
 
   const [filter, setFilter] = useState<FilterState>({
-    sort,
     showPositiveOnly: false,
     showTitleOnly: false,
   });
 
+  const handleSortChange = (newSort: 'sim' | 'date') => {
+    router.push(PATH.SEARCH(query, newSort));
+  };
+
   const handleFilterChange = <K extends keyof FilterState>(key: K, value: FilterState[K]) => {
-    if (key === 'sort') {
-      router.push(PATH.SEARCH(query) + `&sort=${value}`);
-      return;
-    }
     setFilter((prev) => ({ ...prev, [key]: value }));
   };
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useNewsListQuery({
     query,
     display: PAGE_ELEMENT,
-    sort: filter.sort,
+    sort,
     initialData: initialData ?? undefined,
   });
-
-  const observerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!observerRef.current || !hasNextPage || isFetchingNextPage) return;
@@ -69,7 +67,7 @@ const NewsSearchClient = ({ query, sort, initialData }: NewsSearchClientProps) =
       <div className="sticky top-0 z-50 w-full bg-white pt-6 pb-2">
         <div className="px-7 sm:px-12 flex flex-col w-full gap-5">
           <SearchBar keyword={query} />
-          <FilterOption filter={filter} onChange={handleFilterChange} />
+          <FilterOption sort={sort} filter={filter} onSortChange={handleSortChange} onChange={handleFilterChange} />
         </div>
       </div>
 

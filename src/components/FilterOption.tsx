@@ -5,21 +5,18 @@ import SortDropdown from './SortDropdown';
 import FilterCheckboxGroup from './FilterCheckboxGroup';
 
 export interface FilterState {
-  sort: 'sim' | 'date';
   showPositiveOnly: boolean;
   showTitleOnly: boolean;
 }
 
 export interface FilterOptionProps {
+  sort: 'sim' | 'date';
   filter: FilterState;
+  onSortChange?: (sort: 'sim' | 'date') => void;
   onChange?: <K extends keyof FilterState>(key: K, value: FilterState[K]) => void;
 }
 
-const FilterOption = ({ filter, onChange }: FilterOptionProps) => {
-  const handleSortChange = useCallback((sort: 'sim' | 'date') => {
-    onChange?.('sort', sort);
-  }, [onChange]);
-
+const FilterOption = ({ sort, filter, onSortChange, onChange }: FilterOptionProps) => {
   const handleTitleOnlyChange = useCallback((value: boolean) => {
     onChange?.('showTitleOnly', value);
   }, [onChange]);
@@ -31,7 +28,7 @@ const FilterOption = ({ filter, onChange }: FilterOptionProps) => {
   return (
     <div className="flex w-full justify-between items-start px-1 sm:px-2 sm:h-20">
       {/* 정렬 */}
-      <SortDropdown currentSort={filter.sort} onSortChange={handleSortChange} />
+      <SortDropdown currentSort={sort} onSortChange={(s) => onSortChange?.(s)} />
 
       {/* 필터 체크 */}
       <FilterCheckboxGroup
