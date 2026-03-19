@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { NewsItem } from '@/types/news';
 import { isPositive } from '@/utils/validator';
 import { useAnalyzeSentiment } from '@/hooks/api/sentiment';
@@ -12,35 +12,32 @@ export interface NewsCardProps {
   isPositiveOnly: boolean;
 }
 
+type CardState = 'loading' | 'visible' | 'hidden';
+
 const NewsCard = ({ news, isTitleOnly, isPositiveOnly }: NewsCardProps) => {
-  const newsContent = `${news?.title} ${news?.description}`;
+  const newsContent = news ? `${news.title} ${news.description}` : '';
   const { mutation } = useAnalyzeSentiment(newsContent);
 
   useEffect(() => {
-    if (mutation.status === 'idle' && !!newsContent.trim()) {
-      mutation.mutate();
-    }
-  }, [mutation, newsContent]);
+    if (news) mutation.mutate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const sentimentScore = mutation.data?.documentSentiment.score;
-  const isVisible: boolean = isPositiveOnly ? isPositive(sentimentScore || 0) : true;
   const isLoading = !news || (mutation.isPending && isPositiveOnly);
+  const isVisible = isPositiveOnly ? isPositive(sentimentScore ?? 0) : true;
+
+  const cardState: CardState = isLoading ? 'loading' : isVisible ? 'visible' : 'hidden';
+
+  const contentMap: Record<CardState, React.ReactNode> = {
+    loading: <NewsCardLoading />,
+    visible: news && <NewsCardContent news={news} isTitleOnly={isTitleOnly} />,
+    hidden: <NewsCardNegative />,
+  };
 
   const handleNewsCard = () => {
     if (!isVisible) return;
     window.location.href = `${news?.link}`;
-  };
-
-  const renderContent = () => {
-    if (isLoading) {
-      return <NewsCardLoading />;
-    }
-
-    if (isVisible && news) {
-      return <NewsCardContent news={news} isTitleOnly={isTitleOnly} />;
-    }
-
-    return <NewsCardNegative />;
   };
 
   return (
@@ -48,7 +45,7 @@ const NewsCard = ({ news, isTitleOnly, isPositiveOnly }: NewsCardProps) => {
       onClick={handleNewsCard}
       className="flex flex-col w-full p-5 sm:p-7 text-left bg-white rounded-lg outline-1 sm:hover:outline-3 outline-gray-200  hover:outline-indigo-100 cursor-pointer"
     >
-      {renderContent()}
+      {contentMap[cardState]}
     </button>
   );
 };
