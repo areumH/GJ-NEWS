@@ -1,6 +1,3 @@
-'use client';
-
-import { memo } from 'react';
 import { FILTER_OPTION } from '@/constants/messages';
 import { CheckIcon } from './Icon/CheckIcon';
 
@@ -11,7 +8,7 @@ interface FilterCheckboxGroupProps {
   onPositiveOnlyChange: (value: boolean) => void;
 }
 
-const FilterCheckboxGroup = memo(({
+const FilterCheckboxGroup = ({
   showTitleOnly,
   showPositiveOnly,
   onTitleOnlyChange,
@@ -21,36 +18,24 @@ const FilterCheckboxGroup = memo(({
     <div className="flex flex-col gap-1 sm:gap-3">
       <div className="flex justify-between items-center gap-2 sm:gap-4 text-base sm:text-xl">
         {FILTER_OPTION.TITLE}
-        <button
-          className="cursor-pointer"
-          onClick={() => onTitleOnlyChange(!showTitleOnly)}
-        >
+        <button className="cursor-pointer" onClick={() => onTitleOnlyChange(!showTitleOnly)}>
           <CheckIcon
-            className={`w-6 h-6 sm:w-7 sm:h-7 ${
-              showTitleOnly ? 'text-indigo-600' : 'text-gray-400'
-            }`}
+            className={`w-6 h-6 sm:w-7 sm:h-7 ${showTitleOnly ? 'text-indigo-600' : 'text-gray-400'}`}
             isChecked={showTitleOnly}
           />
         </button>
       </div>
       <div className="flex justify-between items-center gap-2 sm:gap-4 text-base sm:text-xl">
         {FILTER_OPTION.POSITIVE}
-        <button
-          className="cursor-pointer"
-          onClick={() => onPositiveOnlyChange(!showPositiveOnly)}
-        >
+        <button className="cursor-pointer" onClick={() => onPositiveOnlyChange(!showPositiveOnly)}>
           <CheckIcon
-            className={`w-6 h-6 sm:w-7 sm:h-7 ${
-              showPositiveOnly ? 'text-indigo-600' : 'text-gray-400'
-            }`}
+            className={`w-6 h-6 sm:w-7 sm:h-7 ${showPositiveOnly ? 'text-indigo-600' : 'text-gray-400'}`}
             isChecked={showPositiveOnly}
           />
         </button>
       </div>
     </div>
   );
-});
-
-FilterCheckboxGroup.displayName = 'FilterCheckboxGroup';
+};
 
 export default FilterCheckboxGroup;

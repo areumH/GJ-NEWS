@@ -1,6 +1,4 @@
-'use client';
-
-import { useState, useEffect, useRef, memo } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { FILTER_OPTION } from '@/constants/messages';
 import { SortIcon } from '@/components/Icon/SortIcon';
 
@@ -9,7 +7,7 @@ interface SortDropdownProps {
   onSortChange: (sort: 'sim' | 'date') => void;
 }
 
-const SortDropdown = memo(({ currentSort, onSortChange }: SortDropdownProps) => {
+const SortDropdown = ({ currentSort, onSortChange }: SortDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -56,8 +54,6 @@ const SortDropdown = memo(({ currentSort, onSortChange }: SortDropdownProps) => 
       )}
     </div>
   );
-});
-
-SortDropdown.displayName = 'SortDropdown';
+};
 
 export default SortDropdown;

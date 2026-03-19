@@ -1,6 +1,5 @@
 'use client';
 
-import { useCallback } from 'react';
 import SortDropdown from './SortDropdown';
 import FilterCheckboxGroup from './FilterCheckboxGroup';
 
@@ -17,13 +16,13 @@ export interface FilterOptionProps {
 }
 
 const FilterOption = ({ sort, filter, onSortChange, onChange }: FilterOptionProps) => {
-  const handleTitleOnlyChange = useCallback((value: boolean) => {
+  const handleTitleOnlyChange = (value: boolean) => {
     onChange?.('showTitleOnly', value);
-  }, [onChange]);
+  };
 
-  const handlePositiveOnlyChange = useCallback((value: boolean) => {
+  const handlePositiveOnlyChange = (value: boolean) => {
     onChange?.('showPositiveOnly', value);
-  }, [onChange]);
+  };
 
   return (
     <div className="flex w-full justify-between items-start px-1 sm:px-2 sm:h-20">
