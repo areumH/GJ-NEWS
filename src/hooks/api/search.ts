@@ -1,6 +1,7 @@
 import { useInfiniteQuery, InfiniteData } from '@tanstack/react-query';
 import { NewsSearchParams } from '@/types/search';
 import { NewsResponse } from '@/types/news';
+import { NEWS_MAX_ITEMS } from '@/constants/news';
 import { getNewsResult } from '@/api/search';
 
 export const useNewsListQuery = ({
@@ -22,7 +23,7 @@ export const useNewsListQuery = ({
       // lastPage: 최근에 불러온 마지막 페이지 응답 , allPages: 지금까지 불러온 페이지 배열
       const nextStart = allPages.length * display + 1;
       // 네이버 API는 최대 1000개까지만 제공
-      if (nextStart > 1000 || nextStart > lastPage.total) {
+      if (nextStart > NEWS_MAX_ITEMS || nextStart > lastPage.total) {
         return undefined;
       }
       return nextStart; // 다음 pageParam 값
