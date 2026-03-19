@@ -4,16 +4,10 @@ import NewsSearchClient from '@/components/NewsSearchClient';
 export default async function Search({
   searchParams,
 }: {
-  searchParams: Promise<{ query?: string; sort?: string }>;
+  searchParams: Promise<{ query?: string; sort?: 'sim' | 'date' }>;
 }) {
   const { query = '', sort = 'sim' } = await searchParams;
   const initialData = query ? await fetchNewsFirstPage(query, sort) : null;
 
-  return (
-    <NewsSearchClient
-      query={query}
-      sort={sort as 'sim' | 'date'}
-      initialData={initialData}
-    />
-  );
+  return <NewsSearchClient query={query} sort={sort} initialData={initialData} />;
 }
