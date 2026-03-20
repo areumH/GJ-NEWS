@@ -1,10 +1,10 @@
-import { useMutation } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { postAnalyzeSentiment } from '@/api/sentiment';
 
 export const useAnalyzeSentiment = (text: string) => {
-  const mutation = useMutation({
-    mutationFn: () => postAnalyzeSentiment(text),
+  return useQuery({
+    queryKey: ['sentiment', text],
+    queryFn: () => postAnalyzeSentiment(text),
+    enabled: !!text,
   });
-
-  return { mutation };
 };

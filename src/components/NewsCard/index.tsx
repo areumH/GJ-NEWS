@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { NewsItem } from '@/types/news';
 import { isPositive } from '@/utils/validator';
 import { useAnalyzeSentiment } from '@/hooks/api/sentiment';
@@ -16,15 +16,10 @@ type CardState = 'loading' | 'visible' | 'hidden';
 
 const NewsCard = ({ news, isTitleOnly, isPositiveOnly }: NewsCardProps) => {
   const newsContent = news ? `${news.title} ${news.description}` : '';
-  const { mutation } = useAnalyzeSentiment(newsContent);
+  const { data, isPending } = useAnalyzeSentiment(newsContent);
 
-  useEffect(() => {
-    if (news) mutation.mutate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const sentimentScore = mutation.data?.documentSentiment.score;
-  const isLoading = !news || (mutation.isPending && isPositiveOnly);
+  const sentimentScore = data?.documentSentiment.score;
+  const isLoading = !news || (isPending && isPositiveOnly);
   const isVisible = isPositiveOnly ? isPositive(sentimentScore ?? 0) : true;
 
   const cardState: CardState = isLoading ? 'loading' : isVisible ? 'visible' : 'hidden';
