@@ -1,9 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-
-const STORAGE_KEY = 'recent-searches';
-const MAX_ITEMS = 10;
+import { STORAGE_KEY, KEYWORD_MAX_ITEMS } from '@/constants/news';
 
 export const useRecentSearches = () => {
   const [items, setItems] = useState<string[]>([]);
@@ -19,7 +17,7 @@ export const useRecentSearches = () => {
 
     setItems((prev) => {
       const filtered = prev.filter((item) => item !== trimmed);
-      const next = [trimmed, ...filtered].slice(0, MAX_ITEMS);
+      const next = [trimmed, ...filtered].slice(0, KEYWORD_MAX_ITEMS);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
       return next;
     });
