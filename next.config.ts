@@ -7,14 +7,6 @@ const nextConfig: NextConfig = {
   experimental: {
     turbopackFileSystemCacheForDev: true,
   },
-  async rewrites() {
-    return [
-      {
-        source: '/naver-api/:path*',
-        destination: 'https://openapi.naver.com/:path*',
-      },
-    ];
-  },
 };
 
 export default nextConfig;

@@ -1,13 +1,18 @@
-import { END_POINT } from '@/constants/api';
-import { axiosNaverInstance } from './interceptor';
+import { NewsResponse } from '@/types/news';
 
 export const getNewsResult = async (
   query: string,
   display: number,
   start: number,
   sort: string
-) => {
-  const { data } = await axiosNaverInstance.get(END_POINT.NEWS_SEARCH(query, display, start, sort));
+): Promise<NewsResponse> => {
+  const params = new URLSearchParams({
+    query,
+    display: String(display),
+    start: String(start),
+    sort,
+  });
 
-  return data;
+  const res = await fetch(`/api/news?${params}`);
+  return res.json();
 };

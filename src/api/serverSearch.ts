@@ -1,4 +1,5 @@
 import { NewsResponse } from '@/types/news';
+import { ENV } from '@/config/env';
 import { PAGE_ELEMENT } from '@/constants/pagination';
 
 export const fetchNewsFirstPage = async (query: string, sort: string): Promise<NewsResponse> => {
@@ -8,8 +9,8 @@ export const fetchNewsFirstPage = async (query: string, sort: string): Promise<N
     `https://openapi.naver.com/v1/search/news.json?query=${encodeURIComponent(query)}&display=${PAGE_ELEMENT}&start=1&sort=${sort}`,
     {
       headers: {
-        'X-Naver-Client-Id': process.env.NEXT_PUBLIC_NAVER_API_CLIENT!,
-        'X-Naver-Client-Secret': process.env.NEXT_PUBLIC_NAVER_API_CLIENT_KEY!,
+        'X-Naver-Client-Id': ENV.NAVER_CLIENT_ID,
+        'X-Naver-Client-Secret': ENV.NAVER_CLIENT_SECRET,
       },
     },
   );

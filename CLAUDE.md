@@ -22,16 +22,17 @@ Naver 검색 API와 Google Natural Language API를 활용한 감정 분석 기�
 ## 아키텍처
 
 - `/app`: Next.js App Router 페이지 및 레이아웃
+- `/app/api/news`: Naver 뉴스 검색 Route Handler (Naver API 프록시)
 - `/app/api/sentiment`: 감정 분석 Route Handler (Google NLP API 프록시)
 - `/components`: UI 컴포넌트
 - `/hooks/api`: TanStack Query 기반 데이터 훅
-- `/api`: API 호출 함수 및 Axios 인스턴스
+- `/api`: API 호출 함수
 - `/constants`: 상수 정의
 
 ## 중요 사항
 
-- Naver API는 rewrites 프록시(`/naver-api/*`)로 통신합니다. `next.config.ts`와 `vercel.json` 양쪽에 설정되어 있으므로 변경 시 둘 다 수정하세요
-- Google API 키는 서버 전용(`GOOGLE_API_KEY`)입니다. Route Handler를 통해서만 호출하며, 클라이언트에 노출하지 마세요
+- Naver API 키는 서버 전용(`NAVER_API_CLIENT`, `NAVER_API_CLIENT_KEY`)입니다. Route Handler(`/api/news`)를 통해서만 호출하며, 클라이언트에 노출하지 마세요
+- Google API 키는 서버 전용(`GOOGLE_API_KEY`)입니다. Route Handler(`/api/sentiment`)를 통해서만 호출하며, 클라이언트에 노출하지 마세요
 - `reactCompiler: true`이므로 `React.memo`, `useMemo`, `useCallback` 수동 최적화는 불필요합니다
 - `"use cache"`는 `src/api/serverSearch.ts`의 서버 함수에 적용됩니다. 클라이언트 컴포넌트에서는 사용 불가합니다
 - `proxy.ts`(미들웨어)에서 `/search` 경로의 쿼리 유효성을 검사하므로, 검색 라우트 변경 시 함께 확인하세요
