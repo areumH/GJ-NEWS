@@ -72,10 +72,10 @@ src/
 ├── app/                        # Next.js App Router
 │   ├── page.tsx                # 메인 페이지
 │   ├── not-found.tsx           # 404 페이지
+│   ├── api/news/               # 뉴스 검색 Route Handler
 │   ├── api/sentiment/          # 감정 분석 Route Handler
 │   └── search/                 # 검색 결과 페이지
 ├── api/                        # API 호출 로직
-│   ├── interceptor.ts          # Axios 인스턴스
 │   ├── search.ts               # 뉴스 검색 (클라이언트)
 │   ├── serverSearch.ts         # 뉴스 검색 (서버, "use cache")
 │   └── sentiment.ts            # 감정 분석
