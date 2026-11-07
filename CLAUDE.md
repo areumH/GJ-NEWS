@@ -38,7 +38,7 @@ Naver 검색 API와 Google Natural Language API를 활용한 감정 분석 기�
 | `providers/` | 전역 Provider (React Query) |
 | `constants/` | 상수 (메시지, 페이지네이션, API 파라미터 범위·에러 문구, 라우트 경로) |
 | `types/` | 타입 정의 |
-| `utils/` | 유틸 함수 (`validator.ts`, `date.ts`, `html.ts`, `async.ts`, `storage.ts`) |
+| `utils/` | 유틸 함수 (`validator.ts`, `date.ts`, `html.ts`, `async.ts`, `storage.ts`, `sentiment.ts`) |
 | `config/env.ts` | 환경변수 중앙 관리 (서버 전용) |
 | `proxy.ts` | 미들웨어 (`/search` 쿼리 검사) |
 
@@ -106,6 +106,8 @@ Naver 검색 API와 Google Natural Language API를 활용한 감정 분석 기�
 | 2페이지부터 | `/api/news` 응답의 각 기사에 `sentiment`가 들어 있다 |
 
 > 첫 페이지에서 분석을 기다리면 첫 검색 LCP가 약 1.1초 늘어난다 (실측). 그래서 스트리밍으로 보낸다.
+
+부정 판정은 `utils/sentiment.ts`의 `isNegative`로 한다. `score ≤ NEGATIVE_SCORE_THRESHOLD`(-0.1, `constants/news.ts`)만 부정이고, 중립(0 근처)은 긍정과 같이 기사로 보여준다. "긍정 뉴스만" 필터는 부정 기사만 가린다. `magnitude`는 판정에 쓰지 않는다 (제목·요약만 분석해 값이 작고, 결과에 거의 영향이 없음).
 
 `NewsItem.sentiment` 값의 의미:
 

@@ -1,7 +1,7 @@
 import React, { Suspense, use } from 'react';
 import { NewsItem } from '@/types/news';
 import { SentimentValue } from '@/types/sentiment';
-import { isPositive } from '@/utils/validator';
+import { isNegative } from '@/utils/sentiment';
 import NewsCardLoading from './NewsCardLoading';
 import NewsCardContent from './NewsCardContent';
 import NewsCardNegative from './NewsCardNegative';
@@ -23,7 +23,8 @@ const getCardState = (sentiment: SentimentValue | null, isPositiveOnly: boolean)
   if (!isPositiveOnly) return 'visible';
   // null은 분석 실패: 부정으로 취급하지 않고 별도 상태로 보여준다
   if (sentiment === null) return 'error';
-  return isPositive(sentiment.score) ? 'visible' : 'hidden';
+  // 부정(score ≤ NEGATIVE_SCORE_THRESHOLD)만 가리고, 중립·긍정은 기사로 보여준다
+  return isNegative(sentiment.score) ? 'hidden' : 'visible';
 };
 
 interface NewsCardViewProps extends Omit<NewsCardProps, 'pendingSentiment'> {
