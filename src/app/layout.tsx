@@ -15,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ko">
       <body className={`${pretendard.className} max-w-3xl mx-auto`}>
         <ReactQueryProvider>{children}</ReactQueryProvider>
         <Toaster position="top-center" closeButton richColors />
