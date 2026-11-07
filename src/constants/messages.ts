@@ -6,6 +6,8 @@ export const PLACE_HOLDER = {
 export const ARIA_LABEL = {
   SEARCH_INPUT: '뉴스 검색어',
   SEARCH_BUTTON: '검색',
+  RECENT_SEARCHES: '최근 검색어',
+  REMOVE_RECENT_SEARCH: (keyword: string) => `${keyword} 삭제`,
 };
 
 export const MESSAGE = {
