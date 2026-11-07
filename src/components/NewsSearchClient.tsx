@@ -49,7 +49,7 @@ const NewsSearchClient = ({ query, sort, initialData, initialSentiments }: NewsS
             filter={filter}
             hasNextPage={hasNextPage}
             isFetchingNextPage={isFetchingNextPage}
-            // rangeChanged·atBottomStateChange가 같은 순간에 함께 호출될 수 있으므로,
+            // 요청 직후 isFetchingNextPage가 반영되기 전에 다시 호출되더라도
             // 진행 중인 요청을 취소하고 다시 보내지 않도록 cancelRefetch: false (기본값 true)
             onLoadMore={() => fetchNextPage({ cancelRefetch: false })}
           />
