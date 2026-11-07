@@ -25,7 +25,6 @@ Naver 검색 API와 Google Natural Language API를 활용한 감정 분석 기�
 | Language | TypeScript |
 | Styling | Tailwind CSS |
 | 서버 상태 관리 | TanStack Query (React Query) |
-| HTTP Client | Axios |
 | 가상화 | react-virtuoso |
 | Toast UI | Sonner |
 | API | Naver Search API, Google Natural Language API |
@@ -72,15 +71,15 @@ src/
 ├── app/                        # Next.js App Router
 │   ├── page.tsx                # 메인 페이지
 │   ├── not-found.tsx           # 404 페이지
-│   ├── api/news/               # 뉴스 검색 Route Handler
-│   ├── api/sentiment/          # 감정 분석 Route Handler
+│   ├── api/news/               # 뉴스 검색 Route Handler (감정 점수 포함)
 │   └── search/                 # 검색 결과 페이지
 ├── api/                        # API 호출 로직
 │   ├── client/                 # 브라우저 → 내부 API(/api/*)
-│   │   ├── news.ts             # 뉴스 검색 (다음 페이지)
-│   │   └── sentiment.ts        # 감정 분석
+│   │   └── news.ts             # 뉴스 검색 (다음 페이지)
 │   └── server/                 # 서버 → 외부 API (server-only)
-│       └── naver.ts            # 뉴스 검색 첫 페이지 ("use cache")
+│       ├── naver.ts            # Naver 뉴스 검색
+│       ├── google.ts           # Google 감정 분석 ("use cache")
+│       └── news.ts             # 뉴스 + 감정 점수 조합
 ├── schemas/                    # Zod 검증 스키마 (서버 전용)
 ├── components/                 # UI 컴포넌트
 ├── hooks/                      # Custom Hooks
