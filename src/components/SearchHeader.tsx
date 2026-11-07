@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { PATH } from '@/constants/path';
 import { useSearchFilter } from '@/hooks/useSearchFilter';
+import { parseSort } from '@/utils/validator';
 import { FilterState } from '@/types/search';
 import SearchBar from '@/components/SearchBar';
 import FilterOption from '@/components/FilterOption';
@@ -35,7 +36,7 @@ const SearchHeader = () => {
   const { filter, setFilterValue } = useSearchFilter();
 
   const query = searchParams.get('query') ?? '';
-  const sort = searchParams.get('sort') === 'date' ? 'date' : 'sim';
+  const sort = parseSort(searchParams.get('sort'));
 
   // 정렬을 바꿔도 필터는 유지한다
   const handleSortChange = (newSort: 'sim' | 'date') => {
