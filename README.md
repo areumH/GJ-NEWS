@@ -76,9 +76,12 @@ src/
 │   ├── api/sentiment/          # 감정 분석 Route Handler
 │   └── search/                 # 검색 결과 페이지
 ├── api/                        # API 호출 로직
-│   ├── search.ts               # 뉴스 검색 (클라이언트)
-│   ├── serverSearch.ts         # 뉴스 검색 (서버, "use cache")
-│   └── sentiment.ts            # 감정 분석
+│   ├── client/                 # 브라우저 → 내부 API(/api/*)
+│   │   ├── news.ts             # 뉴스 검색 (다음 페이지)
+│   │   └── sentiment.ts        # 감정 분석
+│   └── server/                 # 서버 → 외부 API (server-only)
+│       └── naver.ts            # 뉴스 검색 첫 페이지 ("use cache")
+├── schemas/                    # Zod 검증 스키마 (서버 전용)
 ├── components/                 # UI 컴포넌트
 ├── hooks/                      # Custom Hooks
 │   ├── useRecentSearches.ts    # 최근 검색어

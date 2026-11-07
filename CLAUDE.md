@@ -8,7 +8,12 @@ Naver 검색 API와 Google Natural Language API를 활용한 감정 분석 기�
 - 상수는 `src/constants/`에 분리 (메시지, 페이지네이션, API 파라미터 범위·에러 문구, 라우트 경로)
 - 환경변수는 `src/config/env.ts`에서 중앙 관리
 - 타입은 `src/types/`에 별도 정의
-- API 호출 함수는 `src/api/`, TanStack Query 훅은 `src/hooks/api/`, 그 외 훅은 `src/hooks/`에 분리
+- API 호출 함수는 실행 위치에 따라 나눈다
+  - `src/api/client/`: 브라우저에서 내부 API(`/api/*`, Route Handler)를 호출하는 함수. 외부 API·키를 직접 다루지 않는다
+  - `src/api/server/`: 서버에서 외부 API(Naver, Google)를 직접 호출하는 함수. 파일 맨 위에 `import 'server-only'`를 둔다
+  - 파일 이름은 대상 기준: client는 내부 API 이름(`news.ts` → `/api/news`), server는 외부 서비스 이름(`naver.ts`)
+- TanStack Query 훅은 `src/hooks/api/`, 그 외 훅은 `src/hooks/`에 분리
+- 서버 전용 모듈(`config/env.ts`, `api/server/*`, `schemas/*`)에는 `import 'server-only'`를 둔다. 클라이언트 컴포넌트가 import하면 빌드가 실패한다
 - 검증 스키마(Zod)는 `src/schemas/`에 둔다. **Zod는 서버 코드(Route Handler, 서버 컴포넌트)에서만 import한다.** 클라이언트 컴포넌트에서 쓰면 번들이 약 30KB(gzip) 늘어나므로, 클라이언트에서 필요한 검증은 `src/utils/validator.ts`에 일반 함수로 작성한다
 - 조건부 렌더링은 `Record<State, ReactNode>` 맵 패턴 사용
 - UI 문자열은 한국어로 `constants/messages.ts`에 관리
@@ -33,7 +38,7 @@ Naver 검색 API와 Google Natural Language API를 활용한 감정 분석 기�
 - `/app/api/sentiment`: 감정 분석 Route Handler (Google NLP API 프록시)
 - `/components`: UI 컴포넌트
 - `/hooks/api`: TanStack Query 기반 데이터 훅 / `/hooks`: 그 외 훅
-- `/api`: API 호출 함수 (`serverSearch.ts`는 서버 전용)
+- `/api/client`: 브라우저 → 내부 API(`/api/*`) 호출 함수 / `/api/server`: 서버 → 외부 API 호출 함수 (서버 전용). URL을 만드는 `/app/api`(Route Handler)와 혼동하지 않는다
 - `/schemas`: Zod 검증 스키마 (서버 전용)
 - `/providers`: 전역 Provider (React Query)
 - `/constants`, `/types`, `/utils`, `/config`
@@ -44,7 +49,7 @@ Naver 검색 API와 Google Natural Language API를 활용한 감정 분석 기�
 - Naver API 키는 서버 전용(`NAVER_API_CLIENT`, `NAVER_API_CLIENT_KEY`)입니다. Route Handler(`/api/news`)와 서버 함수를 통해서만 호출하며, 클라이언트에 노출하지 마세요
 - Google API 키는 서버 전용(`GOOGLE_API_KEY`)입니다. Route Handler(`/api/sentiment`)를 통해서만 호출하며, 클라이언트에 노출하지 마세요. 키가 요청 URL에 들어가므로 fetch 에러 객체를 그대로 로그에 남기지 마세요
 - `reactCompiler: true`이므로 `React.memo`, `useMemo`, `useCallback` 수동 최적화는 불필요합니다
-- `"use cache"`는 `src/api/serverSearch.ts`의 서버 함수에 적용됩니다. 클라이언트 컴포넌트에서는 사용 불가합니다. 에러 응답은 반환하지 말고 throw해야 캐싱되지 않습니다
+- `"use cache"`는 `src/api/server/naver.ts`의 서버 함수에 적용됩니다. 클라이언트 컴포넌트에서는 사용 불가합니다. 에러 응답은 반환하지 말고 throw해야 캐싱되지 않습니다
 - `proxy.ts`(미들웨어)에서 `/search` 경로의 쿼리 유효성을 검사하므로, 검색 라우트 변경 시 함께 확인하세요
 - 검색 상태는 URL이 기준입니다: `query`, `sort`, 필터(`titleOnly=1`, `positiveOnly=1`). URL은 `PATH.SEARCH()`로 만들고, 필터는 `useSearchFilter` 훅이 `window.history.replaceState`로 바꿉니다(서버 요청 없음). `sort`처럼 임의 문자열이 올 수 있는 값은 `parseSort` 등으로 허용값을 확인하세요
 - 레이아웃은 `searchParams`를 받지 못하므로 클라이언트 컴포넌트에서 `useSearchParams()`를 쓰고, `cacheComponents` 환경이라 반드시 Suspense로 감싸세요
