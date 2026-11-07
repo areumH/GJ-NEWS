@@ -1,4 +1,4 @@
-import { fetchNewsFirstPage } from '@/api/serverSearch';
+import { fetchNewsFirstPage } from '@/api/server/naver';
 import { parseSort } from '@/utils/validator';
 import NewsSearchClient from '@/components/NewsSearchClient';
 

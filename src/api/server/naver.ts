@@ -1,3 +1,5 @@
+// src/api/server/*: 서버에서 외부 API를 직접 호출하는 함수 (클라이언트에서 import하면 빌드 실패)
+import 'server-only';
 import { NewsResponse } from '@/types/news';
 import { ENV } from '@/config/env';
 import { PAGE_ELEMENT } from '@/constants/pagination';

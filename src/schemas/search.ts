@@ -1,4 +1,6 @@
 // 서버(Route Handler 등)에서만 import한다. 클라이언트 컴포넌트에서 쓰면 zod가 번들에 포함된다 (약 +30KB gzip)
+// 'server-only'로 클라이언트 import를 빌드 단계에서 막는다
+import 'server-only';
 import { z } from 'zod';
 import { NEWS_SEARCH_PARAMS } from '@/constants/api';
 

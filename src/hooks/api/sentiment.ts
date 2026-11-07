@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { postAnalyzeSentiment } from '@/api/sentiment';
+import { postAnalyzeSentiment } from '@/api/client/sentiment';
 
 export const useAnalyzeSentiment = (text: string) => {
   return useQuery({

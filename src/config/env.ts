@@ -1,7 +1,9 @@
 /**
  * 환경변수 중앙 관리 (서버 전용)
  * Route Handler 및 서버 컴포넌트에서만 접근 가능합니다.
+ * 클라이언트 컴포넌트에서 import하면 'server-only'에 의해 빌드가 실패합니다.
  */
+import 'server-only';
 
 export const ENV = {
   // Naver API

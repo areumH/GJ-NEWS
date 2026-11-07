@@ -2,7 +2,7 @@ import { useInfiniteQuery, InfiniteData } from '@tanstack/react-query';
 import { NewsSearchParams } from '@/types/search';
 import { NewsResponse } from '@/types/news';
 import { NEWS_MAX_ITEMS } from '@/constants/news';
-import { getNewsResult } from '@/api/search';
+import { getNewsResult } from '@/api/client/news';
 
 export const useNewsListQuery = ({
   query,
