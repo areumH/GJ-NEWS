@@ -4,90 +4,87 @@
 
 > 긍정 뉴스만 뽑아보자!
 
-Naver 검색 API와 Google Natural Language API를 활용한 감정 분석 기반 뉴스 필터링 서비스.
-키워드로 뉴스를 검색하고, 감정 분석을 통해 긍정적인 뉴스만 선별하여 보여준다.
+키워드로 뉴스를 검색하면 기사마다 감정을 분석해, 원하면 긍정적인 뉴스만 골라 보여주는 서비스입니다.
+뉴스 검색은 Naver 검색 API, 감정 분석은 Google Natural Language API를 사용합니다.
 
 ## 주요 기능
 
-- **실시간 뉴스 검색**: Naver 검색 API를 통한 최신 뉴스 검색
-- **감정 분석**: Google Natural Language API로 뉴스 감정 점수 분석
-- **긍정 뉴스 필터링**: 긍정적인 뉴스만 선별하여 표시
-- **최근 검색어**: 검색어 히스토리 (최대 10개)
-- **무한 스크롤**: react-virtuoso 가상화 기반의 끊김 없는 뉴스 탐색
-- **정렬 옵션**: 정확도순 / 최신순 정렬
-- **반응형 디자인**: 모바일/태블릿/데스크톱 모두 지원
+- **뉴스 검색**: 정확도순 / 최신순 정렬, 무한 스크롤 (react-virtuoso 가상화)
+- **긍정 뉴스 필터**: 감정 점수가 긍정인 기사만 표시. 분석 실패는 부정과 구분해 안내
+- **제목만 보기**: 본문 요약을 숨기고 제목만 표시
+- **최근 검색어**: 최대 10개 저장, 키보드로 선택·삭제 가능
+- **검색 상태 공유**: 검색어·정렬·필터가 URL에 남아 새로고침·링크 공유 시 유지
+- **접근성**: 기사 카드는 링크(새 탭 열기 지원), 검색창·필터에 스크린 리더용 이름과 상태 제공
+
+## 동작 방식
+
+API 키는 서버에서만 사용하며, 브라우저는 외부 API를 직접 호출하지 않습니다.
+
+| 구분 | 처리 |
+| --- | --- |
+| 첫 페이지 | 서버가 Naver 검색 결과를 바로 렌더링하고, 감정 분석 결과는 끝나는 대로 같은 응답으로 스트리밍 |
+| 다음 페이지 | `/api/news`가 Naver 검색 결과에 감정 점수를 붙여 반환 |
+| 감정 분석 | 서버에서 기사별로 동시에 요청하고, 같은 문장은 캐시(`'use cache'`)해 다시 분석하지 않음 |
+| 필터 전환 | 이미 받은 점수로 브라우저에서 바로 적용 (서버 요청 없음) |
 
 ## 기술 스택
 
 | 분류 | 기술 |
-|------|------|
-| Framework | Next.js 16 (App Router) |
+| --- | --- |
+| Framework | Next.js (App Router, Cache Components, React Compiler) |
 | Language | TypeScript |
-| Styling | Tailwind CSS |
-| 서버 상태 관리 | TanStack Query (React Query) |
+| UI | React, Tailwind CSS, Sonner (토스트) |
+| 서버 상태 관리 | TanStack Query |
 | 가상화 | react-virtuoso |
-| Toast UI | Sonner |
-| API | Naver Search API, Google Natural Language API |
+| 검증 | Zod (서버 전용) |
+| 외부 API | Naver Search API, Google Natural Language API |
 
-## 설치 및 실행
+## 시작하기
+
+Node.js 20.9 이상이 필요합니다 (Next.js 16 요구 사항).
 
 ```bash
 npm install
 ```
 
-개발 서버 실행:
-
-```bash
-npm run dev
-```
-
-프로덕션 빌드 및 실행:
-
-```bash
-npm run build
-npm run start
-```
-
-린트 검사:
-
-```bash
-npm run lint
-```
-
-### 환경 변수
-
-프로젝트 실행에 아래 환경 변수가 필요하다:
+프로젝트 루트에 `.env.local`을 만들고 아래 환경 변수를 설정합니다. 모두 서버 전용입니다.
 
 | 변수명 | 설명 |
-|--------|------|
-| `NAVER_CLIENT_ID` | Naver 검색 API 클라이언트 ID |
-| `NAVER_CLIENT_SECRET` | Naver 검색 API 클라이언트 시크릿 |
-| `GOOGLE_API_KEY` | Google Natural Language API 키 (서버 전용) |
+| --- | --- |
+| `NAVER_API_CLIENT` | Naver 검색 API 클라이언트 ID |
+| `NAVER_API_CLIENT_KEY` | Naver 검색 API 클라이언트 시크릿 |
+| `GOOGLE_API_KEY` | Google Natural Language API 키 |
+
+```bash
+npm run dev      # 개발 서버 (http://localhost:3000)
+npm run build    # 프로덕션 빌드 (타입 검사 포함)
+npm run start    # 프로덕션 서버
+npm run lint     # ESLint 검사
+```
 
 ## 프로젝트 구조
 
 ```
 src/
-├── app/                        # Next.js App Router
-│   ├── page.tsx                # 메인 페이지
-│   ├── not-found.tsx           # 404 페이지
-│   ├── api/news/               # 뉴스 검색 Route Handler (감정 점수 포함)
-│   └── search/                 # 검색 결과 페이지
-├── api/                        # API 호출 로직
-│   ├── client/                 # 브라우저 → 내부 API(/api/*)
-│   │   └── news.ts             # 뉴스 검색 (다음 페이지)
-│   └── server/                 # 서버 → 외부 API (server-only)
-│       ├── naver.ts            # Naver 뉴스 검색
-│       ├── google.ts           # Google 감정 분석 ("use cache")
-│       └── news.ts             # 뉴스 + 감정 점수 조합
-├── schemas/                    # Zod 검증 스키마 (서버 전용)
-├── components/                 # UI 컴포넌트
-├── hooks/                      # Custom Hooks
-│   ├── useRecentSearches.ts    # 최근 검색어
-│   └── api/                    # TanStack Query 기반 데이터 훅
-├── constants/                  # 상수 정의
-├── config/                     # 환경 변수 설정
-├── types/                      # TypeScript 타입 정의
-├── utils/                      # 유틸리티 함수
-└── proxy.ts                    # 검색 라우트 쿼리 유효성 검사 미들웨어
+├── app/
+│   ├── page.tsx              # 메인 (검색 시작)
+│   ├── search/               # 검색 결과 (layout: 검색 헤더, page·loading·error)
+│   └── api/news/             # 뉴스 검색 Route Handler (감정 점수 포함)
+├── api/
+│   ├── client/               # 브라우저 → 내부 API (/api/news)
+│   └── server/               # 서버 → 외부 API (server-only)
+│       ├── naver.ts          #   Naver 뉴스 검색
+│       ├── google.ts         #   Google 감정 분석
+│       └── news.ts           #   뉴스 + 감정 점수 조합
+├── components/               # UI 컴포넌트 (NewsCard, NewsList, SearchBar …)
+├── hooks/
+│   ├── api/                  # TanStack Query 훅
+│   └── *.ts                  # 최근 검색어, 필터(URL), 화면 진입 감지
+├── schemas/                  # Zod 검증 스키마 (서버 전용)
+├── constants/                # 메시지, 페이지네이션, API 파라미터, 라우트
+├── types/                    # 타입 정의
+├── utils/                    # 날짜(KST), HTML 파싱, 동시 요청 제한, 검증
+├── config/env.ts             # 환경 변수 (서버 전용)
+├── providers/                # React Query Provider
+└── proxy.ts                  # /search 쿼리 검사 (미들웨어)
 ```
