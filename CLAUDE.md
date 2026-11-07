@@ -56,4 +56,4 @@ Naver 검색 API와 Google Natural Language API를 활용한 감정 분석 기�
 - `error.tsx`에서 서버 데이터를 다시 불러오려면 `reset`이 아니라 `retry`를 사용합니다 (Next 16.4)
 - `next.config.ts`의 `partialPrefetching: false`는 기존 prefetch 동작 유지용입니다. Next 17에서 기본값이 바뀌므로 변경 시 검토가 필요합니다
 - 날짜는 `utils/date.ts`의 `formatDate`(Asia/Seoul 고정)로 표시합니다. `toISOString()`은 UTC라 새벽 기사가 전날로 보입니다
-- react-virtuoso `initialItemCount`를 `endReached`와 함께 쓰면 마운트 시점에 `endReached`가 소진돼 무한 스크롤이 멈춥니다. 적용하려면 다음 페이지 판정을 `rangeChanged` 등으로 바꿔야 합니다
+- `NewsList`는 서버 HTML에 첫 페이지 카드를 넣기 위해 react-virtuoso `initialItemCount`를 씁니다. 이와 함께 `endReached`를 쓰면 마운트 시점에 내부적으로 소진돼 무한 스크롤이 멈추므로 쓰지 마세요. 다음 페이지 판정은 `rangeChanged`(평소 스크롤) + `atBottomStateChange`(콘텐츠가 화면보다 짧을 때)로 하고, 두 콜백이 겹쳐도 중복 요청이 없도록 `fetchNextPage({ cancelRefetch: false })`를 씁니다
