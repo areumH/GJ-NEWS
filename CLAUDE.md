@@ -38,7 +38,7 @@ Naver 검색 API와 Google Natural Language API를 활용한 감정 분석 기�
 | `providers/` | 전역 Provider (React Query) |
 | `constants/` | 상수 (메시지, 페이지네이션, API 파라미터 범위·에러 문구, 라우트 경로) |
 | `types/` | 타입 정의 |
-| `utils/` | 유틸 함수 (`validator.ts`, `date.ts`, `html.ts`, `async.ts`) |
+| `utils/` | 유틸 함수 (`validator.ts`, `date.ts`, `html.ts`, `async.ts`, `storage.ts`) |
 | `config/env.ts` | 환경변수 중앙 관리 (서버 전용) |
 | `proxy.ts` | 미들웨어 (`/search` 쿼리 검사) |
 
@@ -64,6 +64,7 @@ Naver 검색 API와 Google Natural Language API를 활용한 감정 분석 기�
 - 조건부 렌더링은 `Record<State, ReactNode>` 맵 패턴을 쓴다
 - UI 문자열은 한국어로 `constants/messages.ts`에 둔다
 - `reactCompiler: true`이므로 `React.memo`, `useMemo`, `useCallback`은 쓰지 않는다
+- localStorage 값은 effect 안에서 `setState`로 복사하지 않고, `utils/storage.ts`의 `createLocalStorageStore` + `useSyncExternalStore`로 구독한다 (예: `useRecentSearches`)
 - 날짜는 `utils/date.ts`의 `formatDate`(Asia/Seoul 고정)로 표시한다. `toISOString()`은 UTC라 새벽 기사가 전날로 보인다
 
 ### Route Handler 에러 응답

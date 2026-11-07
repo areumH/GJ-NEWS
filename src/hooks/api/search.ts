@@ -29,8 +29,8 @@ export const useNewsListQuery = ({
       return nextStart; // 다음 pageParam 값
     },
     initialPageParam: 1,
+    // 서버에서 받은 첫 페이지. initialDataUpdatedAt을 지정하지 않으면 지금 시점의 데이터로 보고 staleTime 동안 다시 요청하지 않는다
     initialData: initialData ? { pages: [initialData], pageParams: [1] } : undefined,
-    initialDataUpdatedAt: initialData ? Date.now() : undefined,
     staleTime: 30_000,
     enabled: !!query,
   });

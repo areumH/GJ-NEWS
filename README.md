@@ -83,7 +83,7 @@ src/
 ├── schemas/                  # Zod 검증 스키마 (서버 전용)
 ├── constants/                # 메시지, 페이지네이션, API 파라미터, 라우트
 ├── types/                    # 타입 정의
-├── utils/                    # 날짜(KST), HTML 파싱, 동시 요청 제한, 검증
+├── utils/                    # 날짜(KST), HTML 파싱, 동시 요청 제한, localStorage 구독, 검증
 ├── config/env.ts             # 환경 변수 (서버 전용)
 ├── providers/                # React Query Provider
 └── proxy.ts                  # /search 쿼리 검사 (미들웨어)
