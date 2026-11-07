@@ -16,5 +16,4 @@ export const PATH = {
     }
     return `/search?${params}`;
   },
-  NEWS: (title: string) => `/news/${encodeURIComponent(title)}`,
 };
