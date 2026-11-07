@@ -59,6 +59,11 @@ Naver 검색 API와 Google Natural Language API를 활용한 감정 분석 기�
 - **Zod는 서버 코드(Route Handler, 서버 컴포넌트)에서만 import한다.** 클라이언트에서 쓰면 번들이 약 30KB(gzip) 늘어난다
   - 클라이언트에서 필요한 검증은 `utils/validator.ts`에 일반 함수로 작성한다 (예: `parseSort`)
 
+### 포맷
+
+- 코드 포맷은 프로젝트 루트의 `.prettierrc`를 따른다 (작은따옴표, 한 줄 120자, 줄바꿈 LF)
+- 줄바꿈은 `.gitattributes`(`* text=auto eol=lf`)로 LF로 통일한다. 파일을 통째로 다시 쓸 때도 LF로 저장한다
+
 ### 컴포넌트·UI
 
 - 조건부 렌더링은 `Record<State, ReactNode>` 맵 패턴을 쓴다
