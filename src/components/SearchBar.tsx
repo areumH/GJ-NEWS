@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { PATH } from '@/constants/path';
-import { PLACE_HOLDER } from '@/constants/messages';
+import { ARIA_LABEL, PLACE_HOLDER } from '@/constants/messages';
 import { SearchIcon } from '@/components/Icon/SearchIcon';
 import { useRecentSearches } from '@/hooks/useRecentSearches';
 
@@ -46,14 +46,21 @@ const SearchBar = ({ keyword }: SearchBarProps) => {
   return (
     <div className="relative w-full">
       <div ref={containerRef}>
-        <div className="flex w-full h-12 sm:h-16 items-center rounded-2xl px-2 sm:px-4 border-2 border-indigo-300">
+        {/* role="search": 스크린 리더의 랜드마크 목록에 "검색" 영역으로 표시된다 (form이 아니어도 지정 가능) */}
+        <div
+          role="search"
+          className="flex w-full h-12 sm:h-16 items-center rounded-2xl px-2 sm:px-4 border-2 border-indigo-300"
+        >
           <button
+            type="button"
+            aria-label={ARIA_LABEL.SEARCH_BUTTON}
             onClick={() => handleSearch()}
             className="flex shrink-0 justify-center items-center w-8 h-8 sm:w-12 sm:h-12 cursor-pointer"
           >
             <SearchIcon className="w-6 h-6 sm:w-8 sm:h-8 text-indigo-500" />
           </button>
           <input
+            aria-label={ARIA_LABEL.SEARCH_INPUT}
             value={keywordValue}
             placeholder={PLACE_HOLDER.SEARCH}
             onChange={(e) => setKeywordValue(e.target.value)}

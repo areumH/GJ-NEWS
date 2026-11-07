@@ -1,6 +1,7 @@
 export const CheckIcon = ({ className, isChecked }: { className: string; isChecked: boolean }) => {
   return isChecked ? (
     <svg
+      aria-hidden
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="currentColor"
@@ -10,6 +11,7 @@ export const CheckIcon = ({ className, isChecked }: { className: string; isCheck
     </svg>
   ) : (
     <svg
+      aria-hidden
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="currentColor"

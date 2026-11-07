@@ -2,6 +2,12 @@ export const PLACE_HOLDER = {
   SEARCH: '어떤 긍정 뉴스를 찾아볼까요?',
 };
 
+// 화면에는 보이지 않고 스크린 리더가 읽는 이름 (aria-label)
+export const ARIA_LABEL = {
+  SEARCH_INPUT: '뉴스 검색어',
+  SEARCH_BUTTON: '검색',
+};
+
 export const MESSAGE = {
   NEGATIVE: '부정 뉴스입니다 !',
   SENTIMENT_ERROR: '감정 분석에 실패했습니다',
