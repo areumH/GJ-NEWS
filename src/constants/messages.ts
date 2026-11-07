@@ -16,6 +16,13 @@ export const SEARCH_RESULT = {
   CHECK_KEYWORD: '검색어를 다시 확인해주세요!',
 };
 
+export const SEARCH_ERROR = {
+  TITLE: '뉴스를 불러오지 못했습니다.',
+  DESCRIPTION: '잠시 후 다시 시도해주세요.',
+  RETRY: '다시 시도',
+  HOME: '홈으로 돌아가기',
+};
+
 export const FILTER_OPTION = {
   SIM: '정확도순',
   DATE: '최신순',

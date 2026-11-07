@@ -14,5 +14,9 @@ export const getNewsResult = async (
   });
 
   const res = await fetch(`/api/news?${params}`);
+  // fetch는 4xx/5xx에서 reject하지 않으므로 직접 throw해야 React Query가 에러로 처리한다
+  if (!res.ok) {
+    throw new Error(`News search request failed: ${res.status}`);
+  }
   return res.json();
 };

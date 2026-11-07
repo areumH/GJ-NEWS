@@ -15,5 +15,10 @@ export const fetchNewsFirstPage = async (query: string, sort: string): Promise<N
     },
   );
 
+  // 에러 응답을 그대로 반환하면 'use cache'에 캐싱되므로 throw한다 (throw된 결과는 캐싱되지 않음)
+  if (!res.ok) {
+    throw new Error(`Naver news API request failed: ${res.status}`);
+  }
+
   return res.json();
 };
