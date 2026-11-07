@@ -11,6 +11,7 @@ export const ARIA_LABEL = {
 };
 
 export const MESSAGE = {
+  REQUEST_ERROR: '요청 처리 중 오류가 발생했습니다.',
   NEGATIVE: '부정 뉴스입니다 !',
   SENTIMENT_ERROR: '감정 분석에 실패했습니다',
 };

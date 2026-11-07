@@ -4,15 +4,15 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { PATH } from '@/constants/path';
 import { useSearchFilter } from '@/hooks/useSearchFilter';
 import { parseSort } from '@/utils/validator';
-import { FilterState } from '@/types/search';
+import { FilterState, SortType } from '@/types/search';
 import SearchBar from '@/components/SearchBar';
 import FilterOption from '@/components/FilterOption';
 
 interface SearchHeaderViewProps {
   query: string;
-  sort: 'sim' | 'date';
+  sort: SortType;
   filter: FilterState;
-  onSortChange?: (sort: 'sim' | 'date') => void;
+  onSortChange?: (sort: SortType) => void;
   onFilterChange?: <K extends keyof FilterState>(key: K, value: FilterState[K]) => void;
 }
 
@@ -39,7 +39,7 @@ const SearchHeader = () => {
   const sort = parseSort(searchParams.get('sort'));
 
   // 정렬을 바꿔도 필터는 유지한다
-  const handleSortChange = (newSort: 'sim' | 'date') => {
+  const handleSortChange = (newSort: SortType) => {
     router.push(PATH.SEARCH(query, newSort, filter));
   };
 

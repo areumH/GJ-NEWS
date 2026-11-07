@@ -5,13 +5,14 @@ import { useNewsListQuery } from '@/hooks/api/search';
 import { useSearchFilter } from '@/hooks/useSearchFilter';
 import { NewsResponse } from '@/types/news';
 import { SentimentValue } from '@/types/sentiment';
+import { SortType } from '@/types/search';
 import { SpinnerIcon } from '@/components/Icon/SpinnerIcon';
 import NoResultMessage from '@/components/NoResultMessage';
 import NewsList from '@/components/NewsList';
 
 interface NewsSearchClientProps {
   query: string;
-  sort: 'sim' | 'date';
+  sort: SortType;
   initialData: NewsResponse | null;
   // 첫 페이지 감정 점수 (서버에서 기다리지 않고 넘긴 Promise 배열)
   initialSentiments: Promise<SentimentValue | null>[] | null;

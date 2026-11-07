@@ -4,7 +4,7 @@ import 'server-only';
 import { z } from 'zod';
 import { NEWS_SEARCH_PARAMS } from '@/constants/api';
 
-// 정렬: 허용값('sim' | 'date')만 통과. 기본값 처리가 필요하면 utils/validator.ts의 parseSort 사용
+// 정렬: 허용값(SortType: 'sim' | 'date')만 통과. 기본값 처리가 필요하면 utils/validator.ts의 parseSort 사용
 export const sortSchema = z.enum(NEWS_SEARCH_PARAMS.SORTS);
 
 // /api/news 쿼리 파라미터. URLSearchParams 값은 모두 문자열이므로 숫자는 coerce로 변환한다

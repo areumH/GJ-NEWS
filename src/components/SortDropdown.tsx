@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { FILTER_OPTION } from '@/constants/messages';
 import { SortIcon } from '@/components/Icon/SortIcon';
+import { SortType } from '@/types/search';
 
 interface SortDropdownProps {
-  currentSort: 'sim' | 'date';
-  onSortChange: (sort: 'sim' | 'date') => void;
+  currentSort: SortType;
+  onSortChange: (sort: SortType) => void;
 }
 
 const SortDropdown = ({ currentSort, onSortChange }: SortDropdownProps) => {

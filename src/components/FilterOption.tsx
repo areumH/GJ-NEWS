@@ -1,13 +1,13 @@
 'use client';
 
-import { FilterState } from '@/types/search';
+import { FilterState, SortType } from '@/types/search';
 import SortDropdown from './SortDropdown';
 import FilterCheckboxGroup from './FilterCheckboxGroup';
 
 export interface FilterOptionProps {
-  sort: 'sim' | 'date';
+  sort: SortType;
   filter: FilterState;
-  onSortChange?: (sort: 'sim' | 'date') => void;
+  onSortChange?: (sort: SortType) => void;
   onChange?: <K extends keyof FilterState>(key: K, value: FilterState[K]) => void;
 }
 

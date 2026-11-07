@@ -64,10 +64,13 @@ const NewsList = ({ news, pendingSentiments, filter, hasNextPage, isFetchingNext
       // 실제 화면 밖 아래쪽 500px 영역까지 미리 렌더링 (스크롤 버벅임 방지)
       overscan={500}
       className="w-full"
+      // 아이템 key. Virtuoso는 itemContent 안의 key를 쓰지 않으므로 여기서 지정한다
+      // 페이지 사이에 같은 기사가 다시 올 수 있어 link만 쓰지 않고 인덱스를 붙인다
+      computeItemKey={(idx, item) => `${item.link}-${idx}`}
       // 각 아이템의 렌더링 내용
       // idx: 인덱스, item: 해당 뉴스 데이터
       itemContent={(idx, item) => (
-        <div key={`${item.title}-${idx}`} className="pb-2 sm:pb-5">
+        <div className="pb-2 sm:pb-5">
           <NewsCard
             news={item}
             pendingSentiment={pendingSentiments?.[idx]}
