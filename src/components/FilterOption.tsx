@@ -1,12 +1,8 @@
 'use client';
 
+import { FilterState } from '@/types/search';
 import SortDropdown from './SortDropdown';
 import FilterCheckboxGroup from './FilterCheckboxGroup';
-
-export interface FilterState {
-  showPositiveOnly: boolean;
-  showTitleOnly: boolean;
-}
 
 export interface FilterOptionProps {
   sort: 'sim' | 'date';

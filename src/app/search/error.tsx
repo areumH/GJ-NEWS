@@ -6,7 +6,8 @@ import { SEARCH_ERROR } from '@/constants/messages';
 
 export default function SearchError({ retry }: { retry: () => void }) {
   return (
-    <div className="flex flex-col w-full min-h-screen justify-center items-center gap-5 sm:gap-7">
+    // 헤더는 layout.tsx에 있으므로 결과 영역 위치(NoResultMessage와 같은 여백)에 그린다
+    <div className="flex flex-col w-full px-7 sm:px-12 items-center mt-50 sm:mt-40 gap-5 sm:gap-7">
       <div className="flex flex-col items-center gap-2">
         <p className="text-2xl">{SEARCH_ERROR.TITLE}</p>
         <p className="text-gray-500">{SEARCH_ERROR.DESCRIPTION}</p>

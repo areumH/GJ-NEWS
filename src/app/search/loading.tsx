@@ -1,20 +1,11 @@
 import { SpinnerIcon } from '@/components/Icon/SpinnerIcon';
-import SearchBar from '@/components/SearchBar';
-import { FilterState } from '@/components/FilterOption';
-import FilterOption from '@/components/FilterOption';
 
-export default function Search() {
-  const filter: FilterState = {
-    showPositiveOnly: false,
-    showTitleOnly: false,
-  };
-
+// 헤더는 layout.tsx에 있으므로 결과 영역만 그린다. 여백·스피너는 NewsSearchClient의 로딩 상태와 같다
+export default function SearchLoading() {
   return (
-    <div className="flex flex-col w-full min-h-screen items-center px-7 sm:px-12 py-6 gap-5 sm:gap-6 bg-gray-50">
-      <SearchBar keyword={''} />
-      <FilterOption sort="sim" filter={filter} />
+    <div className="flex flex-col w-full px-7 sm:px-12">
       <div className="flex w-full justify-center items-center mt-50 sm:mt-40">
-        <SpinnerIcon className="w-10 h-10 text-indigo-800 animate-spin" style={{ animationDuration: '1.5s' }} />
+        <SpinnerIcon className="w-10 h-10 text-indigo-400 animate-spin" style={{ animationDuration: '1.5s' }} />
       </div>
     </div>
   );

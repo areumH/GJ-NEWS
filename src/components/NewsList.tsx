@@ -1,6 +1,6 @@
 import { Virtuoso } from 'react-virtuoso';
 import { NewsItem } from '@/types/news';
-import { FilterState } from '@/components/FilterOption';
+import { FilterState } from '@/types/search';
 import NewsCard from '@/components/NewsCard';
 import { SpinnerIcon } from '@/components/Icon/SpinnerIcon';
 

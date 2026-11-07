@@ -9,3 +9,9 @@ export interface NewsSearchParams {
   // 'sim' - 정확도 순 정렬
   // 'date' - 날짜 순 정렬
 }
+
+// 검색 결과 필터. URL 쿼리(titleOnly, positiveOnly)로 관리한다
+export interface FilterState {
+  showPositiveOnly: boolean;
+  showTitleOnly: boolean;
+}
