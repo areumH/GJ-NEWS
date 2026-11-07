@@ -14,9 +14,11 @@ Naver 검색 API와 Google Natural Language API를 활용한 감정 분석 기�
 | 명령어 | 설명 |
 | --- | --- |
 | `npm run dev` | 개발 서버 시작 (Turbopack) |
-| `npm run build` | 프로덕션 빌드 (타입 검사 포함). **변경 후 확인은 이것으로 한다** |
+| `npm run build` | 프로덕션 빌드 (타입 검사 포함) |
 | `npm run start` | 프로덕션 서버 시작 |
-| `npm run lint` | **현재 동작하지 않음.** Next 16에서 `next lint`가 제거됐고, `npx eslint .`도 `minimatch` override 문제로 실패한다 |
+| `npm run lint` | ESLint 검사 (`eslint .`, flat config `eslint.config.mjs`). Next 16에서 `next lint`가 제거돼 eslint CLI로 실행한다 |
+
+변경 후에는 `npm run lint`와 `npm run build`로 확인한다. lint에는 React Compiler 규칙(`react-hooks/purity`, `react-hooks/set-state-in-effect` 등)이 포함된다.
 
 ## 폴더 구조
 
