@@ -1,6 +1,7 @@
 import React from 'react';
 import { NewsItem } from '@/types/news';
 import { isPositive } from '@/utils/validator';
+import { stripHtml } from '@/utils/html';
 import { useAnalyzeSentiment } from '@/hooks/api/sentiment';
 import NewsCardLoading from './NewsCardLoading';
 import NewsCardContent from './NewsCardContent';
@@ -16,7 +17,8 @@ export interface NewsCardProps {
 type CardState = 'loading' | 'visible' | 'hidden' | 'error';
 
 const NewsCard = ({ news, isTitleOnly, isPositiveOnly }: NewsCardProps) => {
-  const newsContent = news ? `${news.title} ${news.description}` : '';
+  // 감정 분석에는 강조 태그(<b>)·엔티티(&quot; 등)를 걷어낸 순수 문장만 보낸다
+  const newsContent = news ? stripHtml(`${news.title} ${news.description}`) : '';
   const { data, isPending, isError } = useAnalyzeSentiment(newsContent);
 
   const sentimentScore = data?.documentSentiment.score;
