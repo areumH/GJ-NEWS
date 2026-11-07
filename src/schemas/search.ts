@@ -14,3 +14,6 @@ export const newsSearchParamsSchema = z.object({
   start: z.coerce.number().int().min(NEWS_SEARCH_PARAMS.START_MIN).max(NEWS_SEARCH_PARAMS.START_MAX),
   sort: sortSchema,
 });
+
+// 검증을 통과한 /api/news 파라미터 타입. 서버 함수(api/server/*)의 인자로도 쓴다
+export type NewsSearchQuery = z.infer<typeof newsSearchParamsSchema>;

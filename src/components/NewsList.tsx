@@ -1,19 +1,22 @@
 import { Virtuoso } from 'react-virtuoso';
 import { PAGE_ELEMENT } from '@/constants/pagination';
 import { NewsItem } from '@/types/news';
+import { SentimentValue } from '@/types/sentiment';
 import { FilterState } from '@/types/search';
 import NewsCard from '@/components/NewsCard';
 import { SpinnerIcon } from '@/components/Icon/SpinnerIcon';
 
 interface NewsListProps {
   news: NewsItem[];
+  // 첫 페이지 기사들의 감정 점수 Promise (서버 스트리밍). 인덱스가 news의 앞 20개와 같다
+  pendingSentiments?: Promise<SentimentValue | null>[] | null;
   filter: FilterState;
   hasNextPage?: boolean;
   isFetchingNextPage?: boolean;
   onLoadMore?: () => void;
 }
 
-const NewsList = ({ news, filter, hasNextPage, isFetchingNextPage, onLoadMore }: NewsListProps) => {
+const NewsList = ({ news, pendingSentiments, filter, hasNextPage, isFetchingNextPage, onLoadMore }: NewsListProps) => {
   const loadMore = () => {
     if (hasNextPage && !isFetchingNextPage) onLoadMore?.();
   };
@@ -47,6 +50,7 @@ const NewsList = ({ news, filter, hasNextPage, isFetchingNextPage, onLoadMore }:
         <div key={`${item.title}-${idx}`} className="pb-2 sm:pb-5">
           <NewsCard
             news={item}
+            pendingSentiment={pendingSentiments?.[idx]}
             isTitleOnly={filter.showTitleOnly}
             isPositiveOnly={filter.showPositiveOnly}
           />

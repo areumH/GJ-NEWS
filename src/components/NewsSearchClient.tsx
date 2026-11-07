@@ -4,6 +4,7 @@ import { PAGE_ELEMENT } from '@/constants/pagination';
 import { useNewsListQuery } from '@/hooks/api/search';
 import { useSearchFilter } from '@/hooks/useSearchFilter';
 import { NewsResponse } from '@/types/news';
+import { SentimentValue } from '@/types/sentiment';
 import { SpinnerIcon } from '@/components/Icon/SpinnerIcon';
 import NoResultMessage from '@/components/NoResultMessage';
 import NewsList from '@/components/NewsList';
@@ -12,10 +13,12 @@ interface NewsSearchClientProps {
   query: string;
   sort: 'sim' | 'date';
   initialData: NewsResponse | null;
+  // 첫 페이지 감정 점수 (서버에서 기다리지 않고 넘긴 Promise 배열)
+  initialSentiments: Promise<SentimentValue | null>[] | null;
 }
 
 // 검색 헤더(검색창·정렬·필터)는 src/app/search/layout.tsx에 있다
-const NewsSearchClient = ({ query, sort, initialData }: NewsSearchClientProps) => {
+const NewsSearchClient = ({ query, sort, initialData, initialSentiments }: NewsSearchClientProps) => {
   const { filter } = useSearchFilter();
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useNewsListQuery({
@@ -42,6 +45,7 @@ const NewsSearchClient = ({ query, sort, initialData }: NewsSearchClientProps) =
         <div className="flex flex-col w-full items-center gap-5 sm:gap-7">
           <NewsList
             news={allNews}
+            pendingSentiments={initialSentiments}
             filter={filter}
             hasNextPage={hasNextPage}
             isFetchingNextPage={isFetchingNextPage}

@@ -3,17 +3,9 @@ export interface SentimentValue {
   score: number;
 }
 
-export interface SentimentResponse {
+// Google Natural Language API(v2) analyzeSentiment 응답 중 사용하는 부분
+export interface GoogleSentimentResponse {
   documentSentiment: SentimentValue;
   languageCode: string;
-  sentences: [
-    {
-      text: {
-        content: string;
-        beginOffset: number;
-      };
-      sentiment: SentimentValue;
-    }
-  ];
   languageSupported: boolean;
 }
