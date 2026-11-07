@@ -4,6 +4,7 @@ export const PLACE_HOLDER = {
 
 export const MESSAGE = {
   NEGATIVE: '부정 뉴스입니다 !',
+  SENTIMENT_ERROR: '감정 분석에 실패했습니다',
 };
 
 export const IMAGE_ALTS = {

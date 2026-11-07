@@ -5,6 +5,7 @@ import { useAnalyzeSentiment } from '@/hooks/api/sentiment';
 import NewsCardLoading from './NewsCardLoading';
 import NewsCardContent from './NewsCardContent';
 import NewsCardNegative from './NewsCardNegative';
+import NewsCardError from './NewsCardError';
 
 export interface NewsCardProps {
   news?: NewsItem;
@@ -12,26 +13,29 @@ export interface NewsCardProps {
   isPositiveOnly: boolean;
 }
 
-type CardState = 'loading' | 'visible' | 'hidden';
+type CardState = 'loading' | 'visible' | 'hidden' | 'error';
 
 const NewsCard = ({ news, isTitleOnly, isPositiveOnly }: NewsCardProps) => {
   const newsContent = news ? `${news.title} ${news.description}` : '';
-  const { data, isPending } = useAnalyzeSentiment(newsContent);
+  const { data, isPending, isError } = useAnalyzeSentiment(newsContent);
 
   const sentimentScore = data?.documentSentiment.score;
   const isLoading = !news || (isPending && isPositiveOnly);
+
+  const isAnalysisFailed = isError && isPositiveOnly;
   const isVisible = isPositiveOnly ? isPositive(sentimentScore ?? 0) : true;
 
-  const cardState: CardState = isLoading ? 'loading' : isVisible ? 'visible' : 'hidden';
+  const cardState: CardState = isLoading ? 'loading' : isAnalysisFailed ? 'error' : isVisible ? 'visible' : 'hidden';
 
   const contentMap: Record<CardState, React.ReactNode> = {
     loading: <NewsCardLoading />,
     visible: news && <NewsCardContent news={news} isTitleOnly={isTitleOnly} />,
     hidden: <NewsCardNegative />,
+    error: <NewsCardError />,
   };
 
   const handleNewsCard = () => {
-    if (!isVisible) return;
+    if (cardState !== 'visible') return;
     window.location.href = `${news?.link}`;
   };
 
