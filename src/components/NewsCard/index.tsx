@@ -34,19 +34,22 @@ const NewsCard = ({ news, isTitleOnly, isPositiveOnly }: NewsCardProps) => {
     error: <NewsCardError />,
   };
 
-  const handleNewsCard = () => {
-    if (cardState !== 'visible') return;
-    window.location.href = `${news?.link}`;
-  };
+  const cardClassName = 'flex flex-col w-full p-5 sm:p-7 text-left bg-white rounded-lg outline-1 outline-gray-200';
 
-  return (
-    <button
-      onClick={handleNewsCard}
-      className="flex flex-col w-full p-5 sm:p-7 text-left bg-white rounded-lg outline-1 sm:hover:outline-3 outline-gray-200  hover:outline-indigo-100 cursor-pointer"
-    >
-      {contentMap[cardState]}
-    </button>
-  );
+  // 보이는 기사만 링크로 렌더링한다: 새 탭 열기(Cmd/Ctrl+클릭), 링크 복사, 스크린 리더의 "링크" 안내가 동작한다
+  if (cardState === 'visible' && news) {
+    return (
+      <a
+        href={news.link}
+        className={`${cardClassName} sm:hover:outline-3 hover:outline-indigo-100 focus-visible:outline-3 focus-visible:outline-indigo-400`}
+      >
+        {contentMap[cardState]}
+      </a>
+    );
+  }
+
+  // 로딩·부정·분석 실패 상태는 이동할 곳이 없으므로 상호작용 없는 요소로 렌더링한다 (Tab 순서에서도 빠짐)
+  return <div className={cardClassName}>{contentMap[cardState]}</div>;
 };
 
 export default NewsCard;
