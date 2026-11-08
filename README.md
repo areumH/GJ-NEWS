@@ -1,4 +1,4 @@
-<img width="1280" height="640" alt="GJ-NEWS" src="https://github.com/user-attachments/assets/3e917d55-9376-4f98-ac2e-75d979098d59" />
+<img width="1280" height="640" alt="GJ-NEWS-Cover" src="https://github.com/user-attachments/assets/032f7a7a-1b09-4176-a589-283371e588f4" />
 
 # GJ-NEWS
 
