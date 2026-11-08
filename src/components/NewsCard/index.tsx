@@ -17,7 +17,8 @@ export interface NewsCardProps {
 
 type CardState = 'visible' | 'hidden' | 'error';
 
-const CARD_CLASS_NAME = 'flex flex-col w-full p-5 sm:p-7 text-left bg-white rounded-lg outline-1 outline-gray-200';
+// 기사 카드 틀 (기사·로딩 스켈레톤). 부정·분석 실패는 한 줄짜리 카드를 따로 쓴다
+const CARD_CLASS_NAME = 'flex flex-col w-full p-4 sm:p-5 text-left bg-white rounded-xl border border-gray-200';
 
 const getCardState = (sentiment: SentimentValue | null, isPositiveOnly: boolean): CardState => {
   if (!isPositiveOnly) return 'visible';
@@ -34,30 +35,29 @@ interface NewsCardViewProps extends Omit<NewsCardProps, 'pendingSentiment'> {
 const NewsCardView = ({ news, sentiment, isTitleOnly, isPositiveOnly }: NewsCardViewProps) => {
   const cardState = getCardState(sentiment, isPositiveOnly);
 
-  const contentMap: Record<CardState, React.ReactNode> = {
-    visible: <NewsCardContent news={news} isTitleOnly={isTitleOnly} />,
+  const cardMap: Record<CardState, React.ReactNode> = {
+    // 보이는 기사만 링크로 렌더링한다: 새 탭 열기(Cmd/Ctrl+클릭), 링크 복사, 스크린 리더의 "링크" 안내가 동작한다
+    visible: (
+      <a
+        href={news.link}
+        className={`${CARD_CLASS_NAME} transition hover:border-gray-300 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500`}
+      >
+        <NewsCardContent news={news} isTitleOnly={isTitleOnly} />
+      </a>
+    ),
+    // 부정·분석 실패 상태는 이동할 곳이 없으므로 상호작용 없는 요소로 렌더링한다 (Tab 순서에서도 빠짐)
     hidden: <NewsCardNegative />,
     error: <NewsCardError />,
   };
 
-  // 보이는 기사만 링크로 렌더링한다: 새 탭 열기(Cmd/Ctrl+클릭), 링크 복사, 스크린 리더의 "링크" 안내가 동작한다
-  if (cardState === 'visible') {
-    return (
-      <a
-        href={news.link}
-        className={`${CARD_CLASS_NAME} sm:hover:outline-3 hover:outline-indigo-100 focus-visible:outline-3 focus-visible:outline-indigo-400`}
-      >
-        {contentMap[cardState]}
-      </a>
-    );
-  }
-
-  // 부정·분석 실패 상태는 이동할 곳이 없으므로 상호작용 없는 요소로 렌더링한다 (Tab 순서에서도 빠짐)
-  return <div className={CARD_CLASS_NAME}>{contentMap[cardState]}</div>;
+  return cardMap[cardState];
 };
 
 // 점수가 도착할 때까지 use()가 렌더링을 멈추고, 가장 가까운 Suspense가 로딩 카드를 보여준다
-const PendingNewsCard = ({ pendingSentiment, ...props }: NewsCardProps & { pendingSentiment: Promise<SentimentValue | null> }) => (
+const PendingNewsCard = ({
+  pendingSentiment,
+  ...props
+}: NewsCardProps & { pendingSentiment: Promise<SentimentValue | null> }) => (
   <NewsCardView {...props} sentiment={use(pendingSentiment)} />
 );
 

@@ -38,7 +38,7 @@ Naver 검색 API와 Google Natural Language API를 활용한 감정 분석 기�
 | `providers/` | 전역 Provider (React Query) |
 | `constants/` | 상수 (메시지, 페이지네이션, API 파라미터 범위·에러 문구, 라우트 경로) |
 | `types/` | 타입 정의 |
-| `utils/` | 유틸 함수 (`validator.ts`, `date.ts`, `html.ts`, `async.ts`, `storage.ts`, `sentiment.ts`) |
+| `utils/` | 유틸 함수 (`validator.ts`, `date.ts`, `html.ts`, `async.ts`, `storage.ts`, `sentiment.ts`, `url.ts`) |
 | `config/env.ts` | 환경변수 중앙 관리 (서버 전용) |
 | `proxy.ts` | 미들웨어 (`/search` 쿼리 검사) |
 

@@ -1,3 +1,9 @@
+// 로고 (검색 페이지 상단). ACCENT 부분만 강조 색으로 표시한다
+export const BRAND = {
+  ACCENT: 'GJ',
+  REST: ' NEWS',
+};
+
 export const PLACE_HOLDER = {
   SEARCH: '어떤 긍정 뉴스를 찾아볼까요?',
 };
@@ -8,22 +14,30 @@ export const ARIA_LABEL = {
   SEARCH_BUTTON: '검색',
   RECENT_SEARCHES: '최근 검색어',
   REMOVE_RECENT_SEARCH: (keyword: string) => `${keyword} 삭제`,
+  HOME: 'GJ NEWS 홈으로',
 };
 
 export const MESSAGE = {
   REQUEST_ERROR: '요청 처리 중 오류가 발생했습니다.',
-  NEGATIVE: '부정 뉴스입니다 !',
-  SENTIMENT_ERROR: '감정 분석에 실패했습니다',
+  NEGATIVE: '부정 뉴스라 가렸어요',
+  SENTIMENT_ERROR: '감정 분석에 실패했어요',
+  LOADING: '감정 분석 중',
+  RECENT_SEARCHES: '최근 검색어',
 };
 
 export const IMAGE_ALTS = {
-  LOADING: '로딩 중',
   NEGATIVE: '부정 뉴스',
 };
 
 export const SEARCH_RESULT = {
   NONE: '에 대한 검색 결과가 없습니다.',
-  CHECK_KEYWORD: '검색어를 다시 확인해주세요!',
+  CHECK_KEYWORD: '다른 검색어로 다시 찾아보세요.',
+};
+
+export const NOT_FOUND = {
+  TITLE: '페이지를 찾을 수 없습니다.',
+  DESCRIPTION: '주소가 바뀌었거나 없는 페이지예요.',
+  HOME: '홈으로 돌아가기',
 };
 
 export const SEARCH_ERROR = {

@@ -33,17 +33,17 @@ const NewsSearchClient = ({ query, sort, initialData, initialSentiments }: NewsS
   const totalResults = data?.pages[0]?.total ?? 0;
 
   return (
-    <div className="flex flex-col w-full px-7 sm:px-12">
+    <div className="flex flex-col w-full px-4 sm:px-6 pb-10">
       {isLoading ? (
         <div className="flex w-full justify-center items-center mt-50 sm:mt-40">
-          <SpinnerIcon className="w-10 h-10 text-indigo-400 animate-spin" style={{ animationDuration: '1.5s' }} />
+          <SpinnerIcon className="w-10 h-10 text-indigo-500 animate-spin" style={{ animationDuration: '1.5s' }} />
         </div>
       ) : totalResults === 0 ? (
         <div className="flex w-full justify-center items-center mt-50 sm:mt-40">
           <NoResultMessage keyword={query} />
         </div>
       ) : (
-        <div className="flex flex-col w-full items-center gap-5 sm:gap-7">
+        <div className="flex flex-col w-full items-center">
           <NewsList
             news={allNews}
             pendingSentiments={initialSentiments}

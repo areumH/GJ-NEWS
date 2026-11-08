@@ -22,10 +22,17 @@ const FilterToggle = ({ label, checked, onChange }: FilterToggleProps) => (
     type="button"
     aria-pressed={checked}
     onClick={() => onChange(!checked)}
-    className="flex justify-between items-center gap-2 sm:gap-4 text-base sm:text-xl cursor-pointer"
+    className={`inline-flex items-center gap-1.5 h-9 px-3 rounded-full border text-sm sm:text-base whitespace-nowrap transition cursor-pointer ${
+      checked
+        ? 'border-indigo-200 bg-indigo-50 text-indigo-700'
+        : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
+    }`}
   >
+    <CheckIcon
+      className={`w-4 h-4 sm:w-5 sm:h-5 ${checked ? 'text-indigo-600' : 'text-gray-300'}`}
+      isChecked={checked}
+    />
     {label}
-    <CheckIcon className={`w-6 h-6 sm:w-7 sm:h-7 ${checked ? 'text-indigo-600' : 'text-gray-400'}`} isChecked={checked} />
   </button>
 );
 
@@ -36,7 +43,7 @@ const FilterCheckboxGroup = ({
   onPositiveOnlyChange,
 }: FilterCheckboxGroupProps) => {
   return (
-    <div className="flex flex-col gap-1 sm:gap-3">
+    <div className="flex gap-2">
       <FilterToggle label={FILTER_OPTION.TITLE} checked={showTitleOnly} onChange={onTitleOnlyChange} />
       <FilterToggle label={FILTER_OPTION.POSITIVE} checked={showPositiveOnly} onChange={onPositiveOnlyChange} />
     </div>

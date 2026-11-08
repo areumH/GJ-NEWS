@@ -37,21 +37,27 @@ const SortDropdown = ({ currentSort, onSortChange }: SortDropdownProps) => {
   }, []);
 
   return (
-    <div ref={dropdownRef} className="flex flex-col w-22 sm:w-28 bg-indigo-50 rounded-md">
+    <div ref={dropdownRef} className="relative">
       <button
+        type="button"
+        aria-expanded={isOpen}
         onClick={handleToggle}
-        className="flex justify-between items-center px-1.5 sm:px-2 sm:py-1 text-indigo-950 sm:text-xl cursor-pointer"
+        className="inline-flex items-center gap-1 h-9 pl-3 pr-2 rounded-full border border-gray-200 bg-white text-sm sm:text-base text-gray-700 whitespace-nowrap hover:border-gray-300 cursor-pointer"
       >
         {currentSort === 'sim' ? FILTER_OPTION.SIM : FILTER_OPTION.DATE}
-        <SortIcon className="w-4 h-4 sm:w-6 sm:h-6 text-indigo-950" isOpen={isOpen} />
+        <SortIcon className="w-4 h-4 text-gray-400" isOpen={isOpen} />
       </button>
+      {/* 레이아웃을 밀어내지 않도록 버튼 아래에 띄워서 연다 */}
       {isOpen && (
-        <button
-          onClick={handleSelect}
-          className="flex items-center px-1.5 sm:px-2 sm:py-1 text-indigo-950 border-t-1 border-t-white sm:text-xl"
-        >
-          {currentSort === 'sim' ? FILTER_OPTION.DATE : FILTER_OPTION.SIM}
-        </button>
+        <div className="absolute left-0 top-full z-10 mt-1 min-w-full rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
+          <button
+            type="button"
+            onClick={handleSelect}
+            className="w-full px-3 py-2 text-left text-sm sm:text-base text-gray-700 whitespace-nowrap hover:bg-gray-50 cursor-pointer"
+          >
+            {currentSort === 'sim' ? FILTER_OPTION.DATE : FILTER_OPTION.SIM}
+          </button>
+        </div>
       )}
     </div>
   );

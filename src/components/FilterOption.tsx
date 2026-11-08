@@ -21,7 +21,7 @@ const FilterOption = ({ sort, filter, onSortChange, onChange }: FilterOptionProp
   };
 
   return (
-    <div className="flex w-full justify-between items-start px-1 sm:px-2 sm:h-20">
+    <div className="flex w-full justify-between items-center gap-2">
       {/* 정렬 */}
       <SortDropdown currentSort={sort} onSortChange={(s) => onSortChange?.(s)} />
 

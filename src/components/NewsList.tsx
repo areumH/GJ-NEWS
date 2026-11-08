@@ -32,7 +32,7 @@ const ListFooter = ({ context }: { context?: ListContext }) => (
     <div ref={context?.endRef} aria-hidden />
     {context?.isFetchingNextPage && (
       <div className="flex w-full justify-center items-center py-4">
-        <SpinnerIcon className="w-8 h-8 text-indigo-400 animate-spin" style={{ animationDuration: '1.5s' }} />
+        <SpinnerIcon className="w-8 h-8 text-indigo-500 animate-spin" style={{ animationDuration: '1.5s' }} />
       </div>
     )}
   </>
@@ -70,7 +70,7 @@ const NewsList = ({ news, pendingSentiments, filter, hasNextPage, isFetchingNext
       // 각 아이템의 렌더링 내용
       // idx: 인덱스, item: 해당 뉴스 데이터
       itemContent={(idx, item) => (
-        <div className="pb-2 sm:pb-5">
+        <div className="pb-3">
           <NewsCard
             news={item}
             pendingSentiment={pendingSentiments?.[idx]}

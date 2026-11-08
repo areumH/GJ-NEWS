@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { PATH } from '@/constants/path';
-import { ARIA_LABEL, PLACE_HOLDER } from '@/constants/messages';
+import { ARIA_LABEL, MESSAGE, PLACE_HOLDER } from '@/constants/messages';
 import { SearchIcon } from '@/components/Icon/SearchIcon';
 import { useRecentSearches } from '@/hooks/useRecentSearches';
 
@@ -56,20 +56,20 @@ const SearchBar = ({ keyword }: SearchBarProps) => {
   };
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full min-w-0">
       <div onKeyDown={handleContainerKeyDown} onBlur={handleContainerBlur}>
         {/* role="search": 스크린 리더의 랜드마크 목록에 "검색" 영역으로 표시된다 (form이 아니어도 지정 가능) */}
         <div
           role="search"
-          className="flex w-full h-12 sm:h-16 items-center rounded-2xl px-2 sm:px-4 border-2 border-indigo-300"
+          className="flex w-full h-12 sm:h-14 items-center rounded-xl bg-white px-2 sm:px-3 border border-gray-200 shadow-sm transition focus-within:border-indigo-400 focus-within:ring-4 focus-within:ring-indigo-100"
         >
           <button
             type="button"
             aria-label={ARIA_LABEL.SEARCH_BUTTON}
             onClick={() => handleSearch()}
-            className="flex shrink-0 justify-center items-center w-8 h-8 sm:w-12 sm:h-12 cursor-pointer"
+            className="flex shrink-0 justify-center items-center w-9 h-9 rounded-lg text-gray-400 hover:text-indigo-600 cursor-pointer"
           >
-            <SearchIcon className="w-6 h-6 sm:w-8 sm:h-8 text-indigo-500" />
+            <SearchIcon className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
           <input
             ref={inputRef}
@@ -81,38 +81,43 @@ const SearchBar = ({ keyword }: SearchBarProps) => {
             onFocus={() => setIsOpen(true)}
             // 이미 포커스가 있는 상태에서 목록을 닫았다면 onFocus가 다시 오지 않으므로 클릭으로도 연다
             onClick={() => setIsOpen(true)}
-            className="w-full h-full px-2 sm:px-3 placeholder-gray-500 text-md sm:text-xl outline-none text-black"
+            className="w-full min-w-0 h-full px-1.5 sm:px-2 bg-transparent placeholder-gray-400 text-base sm:text-lg outline-none text-gray-900"
           />
         </div>
 
         {isOpen && items.length > 0 && (
           // 마우스로 항목을 누를 때 입력창의 포커스가 빠지지 않게 한다
           // (Safari 등은 버튼 클릭 시 버튼에 포커스를 주지 않아, blur로 목록이 먼저 닫히면 클릭이 사라진다)
-          <ul
-            aria-label={ARIA_LABEL.RECENT_SEARCHES}
+          <div
             onMouseDown={(e) => e.preventDefault()}
-            className="absolute z-10 mt-1 w-full rounded-2xl border border-gray-200 bg-white overflow-hidden"
+            className="absolute z-20 mt-2 w-full rounded-xl border border-gray-200 bg-white shadow-lg overflow-hidden"
           >
-            {items.map((item) => (
-              <li key={item} className="flex items-center text-gray-700 hover:bg-indigo-50">
-                <button
-                  type="button"
-                  onClick={() => handleSearch(item)}
-                  className="flex-1 px-4 py-3 text-left cursor-pointer"
-                >
-                  {item}
-                </button>
-                <button
-                  type="button"
-                  aria-label={ARIA_LABEL.REMOVE_RECENT_SEARCH(item)}
-                  onClick={() => handleRemove(item)}
-                  className="px-4 py-3 text-gray-400 hover:text-gray-600 text-sm cursor-pointer"
-                >
-                  ✕
-                </button>
-              </li>
-            ))}
-          </ul>
+            {/* 화면용 제목. 스크린 리더는 목록의 aria-label로 읽으므로 숨긴다 */}
+            <p aria-hidden className="px-4 pt-3 pb-1 text-xs font-medium text-gray-400">
+              {MESSAGE.RECENT_SEARCHES}
+            </p>
+            <ul aria-label={ARIA_LABEL.RECENT_SEARCHES} className="pb-1">
+              {items.map((item) => (
+                <li key={item} className="flex items-center text-gray-700 hover:bg-gray-50">
+                  <button
+                    type="button"
+                    onClick={() => handleSearch(item)}
+                    className="flex-1 min-w-0 truncate px-4 py-2.5 text-left cursor-pointer"
+                  >
+                    {item}
+                  </button>
+                  <button
+                    type="button"
+                    aria-label={ARIA_LABEL.REMOVE_RECENT_SEARCH(item)}
+                    onClick={() => handleRemove(item)}
+                    className="px-4 py-2.5 text-gray-300 hover:text-gray-600 text-sm cursor-pointer"
+                  >
+                    ✕
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
       </div>
     </div>
