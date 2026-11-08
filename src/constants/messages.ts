@@ -25,10 +25,6 @@ export const MESSAGE = {
   RECENT_SEARCHES: '최근 검색어',
 };
 
-export const IMAGE_ALTS = {
-  NEGATIVE: '부정 뉴스',
-};
-
 export const SEARCH_RESULT = {
   NONE: '에 대한 검색 결과가 없습니다.',
   CHECK_KEYWORD: '다른 검색어로 다시 찾아보세요.',
