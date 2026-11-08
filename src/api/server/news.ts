@@ -3,7 +3,7 @@
 import 'server-only';
 import { SENTIMENT_CONCURRENCY } from '@/constants/api';
 import { NaverNewsItem, NewsResponse } from '@/types/news';
-import { SentimentValue } from '@/types/sentiment';
+import { PendingSentiments, SentimentValue } from '@/types/sentiment';
 import { NewsSearchQuery } from '@/schemas/search';
 import { stripHtml } from '@/utils/html';
 import { mapWithLimit } from '@/utils/async';
@@ -20,6 +20,12 @@ export const analyzeNewsSentiments = (items: NaverNewsItem[]): Promise<Sentiment
   mapWithLimit(items, SENTIMENT_CONCURRENCY, (item) => analyzeSentiment(toSentimentText(item))).map((promise) =>
     promise.catch(() => null),
   );
+
+// 기사 주소(link)를 키로 감정 점수 Promise를 짝지은 객체 (첫 페이지 서버 렌더링에서 기다리지 않고 넘길 때 사용)
+export const analyzeNewsSentimentsByLink = (items: NaverNewsItem[]): PendingSentiments => {
+  const promises = analyzeNewsSentiments(items);
+  return Object.fromEntries(items.map((item, index) => [item.link, promises[index]]));
+};
 
 // 감정 점수까지 모두 붙인 뉴스 (/api/news: 2페이지부터)
 // Naver 검색 실패는 throw → 호출한 쪽에서 502/504로 처리

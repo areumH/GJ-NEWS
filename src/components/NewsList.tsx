@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Virtuoso } from 'react-virtuoso';
 import { LOAD_MORE_ROOT_MARGIN, PAGE_ELEMENT } from '@/constants/pagination';
 import { NewsItem } from '@/types/news';
-import { SentimentValue } from '@/types/sentiment';
+import { PendingSentiments } from '@/types/sentiment';
 import { FilterState } from '@/types/search';
 import { useInView } from '@/hooks/useInView';
 import { SpinnerIcon } from '@/components/Icon/SpinnerIcon';
@@ -10,8 +10,8 @@ import NewsCard from '@/components/NewsCard';
 
 interface NewsListProps {
   news: NewsItem[];
-  // 첫 페이지 기사들의 감정 점수 Promise (서버 스트리밍). 인덱스가 news의 앞 20개와 같다
-  pendingSentiments?: Promise<SentimentValue | null>[] | null;
+  // 첫 페이지 기사들의 감정 점수 Promise (서버 스트리밍). 기사 link로 찾는다
+  pendingSentiments?: PendingSentiments | null;
   filter: FilterState;
   hasNextPage?: boolean;
   isFetchingNextPage?: boolean;
@@ -73,7 +73,9 @@ const NewsList = ({ news, pendingSentiments, filter, hasNextPage, isFetchingNext
         <div className="pb-3">
           <NewsCard
             news={item}
-            pendingSentiment={pendingSentiments?.[idx]}
+            // 인덱스가 아니라 link로 찾는다: 캐시의 기사 순서가 서버와 달라도 다른 기사의 점수가 붙지 않는다
+            // (짝이 없으면 NewsCard가 분석 실패로 보여준다)
+            pendingSentiment={pendingSentiments?.[item.link]}
             isTitleOnly={filter.showTitleOnly}
             isPositiveOnly={filter.showPositiveOnly}
           />

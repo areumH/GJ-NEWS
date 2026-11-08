@@ -4,7 +4,7 @@ import { PAGE_ELEMENT } from '@/constants/pagination';
 import { useNewsListQuery } from '@/hooks/api/search';
 import { useSearchFilter } from '@/hooks/useSearchFilter';
 import { NewsResponse } from '@/types/news';
-import { SentimentValue } from '@/types/sentiment';
+import { PendingSentiments } from '@/types/sentiment';
 import { SortType } from '@/types/search';
 import { SpinnerIcon } from '@/components/Icon/SpinnerIcon';
 import NoResultMessage from '@/components/NoResultMessage';
@@ -14,8 +14,8 @@ interface NewsSearchClientProps {
   query: string;
   sort: SortType;
   initialData: NewsResponse | null;
-  // 첫 페이지 감정 점수 (서버에서 기다리지 않고 넘긴 Promise 배열)
-  initialSentiments: Promise<SentimentValue | null>[] | null;
+  // 첫 페이지 감정 점수 (서버에서 기다리지 않고 넘긴 Promise, 기사 link가 키)
+  initialSentiments: PendingSentiments | null;
 }
 
 // 검색 헤더(검색창·정렬·필터)는 src/app/search/layout.tsx에 있다

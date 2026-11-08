@@ -110,7 +110,7 @@ Naver 검색 API와 Google Natural Language API를 활용한 감정 분석 기�
 
 | 구분 | 점수를 받는 방법 |
 | --- | --- |
-| 첫 페이지 | `search/page.tsx`가 뉴스는 바로 렌더링하고, 점수는 기다리지 않고 Promise 배열(`initialSentiments`)로 넘긴다. `NewsCard`는 "긍정 뉴스만" 필터가 켜졌을 때만 `use()`로 기다린다 |
+| 첫 페이지 | `search/page.tsx`가 뉴스는 바로 렌더링하고, 점수는 기다리지 않고 기사 `link`를 키로 한 Promise 객체(`initialSentiments`, `PendingSentiments`)로 넘긴다. 인덱스로 짝지으면 브라우저 캐시와 서버의 기사 순서가 다를 때 다른 기사의 점수가 붙는다. `NewsCard`는 "긍정 뉴스만" 필터가 켜졌을 때만 `use()`로 기다린다 |
 | 2페이지부터 | `/api/news` 응답의 각 기사에 `sentiment`가 들어 있다 |
 
 > 첫 페이지에서 분석을 기다리면 첫 검색 LCP가 약 1.1초 늘어난다 (실측). 그래서 스트리밍으로 보낸다.
