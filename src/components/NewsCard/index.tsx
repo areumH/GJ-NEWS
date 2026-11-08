@@ -15,12 +15,13 @@ export interface NewsCardProps {
   isPositiveOnly: boolean;
 }
 
-type CardState = 'visible' | 'hidden' | 'error';
+// 뉴스 카드를 어떻게 보여줄지: 기사(visible) / 부정이라 가림(hidden) / 분석 실패(error)
+export type CardState = 'visible' | 'hidden' | 'error';
 
 // 기사 카드 틀 (기사·로딩 스켈레톤). 부정·분석 실패는 한 줄짜리 카드를 따로 쓴다
 const CARD_CLASS_NAME = 'flex flex-col w-full p-4 sm:p-5 text-left bg-white rounded-xl border border-gray-200';
 
-const getCardState = (sentiment: SentimentValue | null, isPositiveOnly: boolean): CardState => {
+export const getCardState = (sentiment: SentimentValue | null, isPositiveOnly: boolean): CardState => {
   if (!isPositiveOnly) return 'visible';
   // null은 분석 실패: 부정으로 취급하지 않고 별도 상태로 보여준다
   if (sentiment === null) return 'error';

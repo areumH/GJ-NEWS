@@ -17,8 +17,9 @@ Naver 검색 API와 Google Natural Language API를 활용한 감정 분석 기�
 | `npm run build` | 프로덕션 빌드 (타입 검사 포함) |
 | `npm run start` | 프로덕션 서버 시작 |
 | `npm run lint` | ESLint 검사 (`eslint .`, flat config `eslint.config.mjs`). Next 16에서 `next lint`가 제거돼 eslint CLI로 실행한다 |
+| `npm test` | Vitest로 테스트 1회 실행 (`npm run test:watch`는 파일이 바뀔 때마다 다시 실행) |
 
-변경 후에는 `npm run lint`와 `npm run build`로 확인한다. lint에는 React Compiler 규칙(`react-hooks/purity`, `react-hooks/set-state-in-effect` 등)이 포함된다.
+변경 후에는 `npm run lint`, `npm test`, `npm run build`로 확인한다. lint에는 React Compiler 규칙(`react-hooks/purity`, `react-hooks/set-state-in-effect` 등)이 포함된다.
 
 ## 폴더 구조
 
@@ -81,6 +82,13 @@ Naver 검색 API와 Google Natural Language API를 활용한 감정 분석 기�
 | 400 | 입력 검증 실패 | 어떤 필드가 왜 틀렸는지 `fields`로 함께 반환해도 된다 |
 | 502 | 외부 API 실패 | 외부 API의 원본 에러 본문은 클라이언트에 넘기지 않는다 |
 | 504 | 외부 API 타임아웃 | 제한 시간은 `UPSTREAM_TIMEOUT_MS` |
+
+### 테스트
+
+- Vitest(`vitest.config.mts`). 테스트 파일은 대상 파일 옆에 `*.test.ts`로 둔다 (예: `utils/date.test.ts`)
+- 외부 API(Naver, Google)는 실제로 호출하지 않는다. `vi.stubGlobal('fetch', ...)`로 가짜 응답을 준다 (예: `app/api/news/route.test.ts`)
+- 테스트 환경에서는 `server-only`를 빈 모듈(`test/server-only-stub.ts`)로 바꿔 서버 전용 파일도 테스트한다
+- 버그를 고치면 그 경우를 테스트로 남긴다 (예: KST 새벽 날짜, 분석 실패를 부정으로 보던 문제, 타임아웃 504)
 
 ### 커밋 메시지
 

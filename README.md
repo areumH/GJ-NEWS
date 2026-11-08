@@ -37,6 +37,7 @@ API 키는 서버에서만 사용하며, 브라우저는 외부 API를 직접 �
 | 서버 상태 관리 | TanStack Query |
 | 가상화 | react-virtuoso |
 | 검증 | Zod (서버 전용) |
+| 테스트 | Vitest |
 | 외부 API | Naver Search API, Google Natural Language API |
 
 ## 시작하기
@@ -60,6 +61,7 @@ npm run dev      # 개발 서버 (http://localhost:3000)
 npm run build    # 프로덕션 빌드 (타입 검사 포함)
 npm run start    # 프로덕션 서버
 npm run lint     # ESLint 검사
+npm test         # 테스트 (Vitest)
 ```
 
 ## 프로젝트 구조
