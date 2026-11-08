@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/dade2290-d7bc-4abf-ba2c-6d06c4bf2069)
+<img width="1280" height="640" alt="GJ-NEWS" src="https://github.com/user-attachments/assets/3e917d55-9376-4f98-ac2e-75d979098d59" />
 
 # GJ-NEWS
 
