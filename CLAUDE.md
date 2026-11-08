@@ -87,7 +87,7 @@ Naver 검색 API와 Google Natural Language API를 활용한 감정 분석 기�
 
 - Vitest(`vitest.config.mts`). 테스트 파일은 대상 파일 옆에 `*.test.ts`로 둔다 (예: `utils/date.test.ts`)
 - 외부 API(Naver, Google)는 실제로 호출하지 않는다. `vi.stubGlobal('fetch', ...)`로 가짜 응답을 준다 (예: `app/api/news/route.test.ts`)
-- 테스트 환경에서는 `server-only`를 빈 모듈(`test/server-only-stub.ts`)로 바꿔 서버 전용 파일도 테스트한다
+- 테스트 환경에서는 `server-only`와 `next/cache`(`cacheLife`)를 빈 모듈(`test/*-stub.ts`)로 바꿔 서버 전용 파일도 테스트한다
 - 버그를 고치면 그 경우를 테스트로 남긴다 (예: KST 새벽 날짜, 분석 실패를 부정으로 보던 문제, 타임아웃 504)
 
 ### 커밋 메시지
@@ -130,7 +130,7 @@ Naver 검색 API와 Google Natural Language API를 활용한 감정 분석 기�
 | 함수 | 용도 |
 | --- | --- |
 | `naver.ts`의 `searchNaverNewsCached` | 첫 페이지 Naver 검색 |
-| `google.ts`의 `analyzeSentiment` | 같은 텍스트 재분석 방지 |
+| `google.ts`의 `analyzeSentiment` | 같은 텍스트 재분석 방지. 점수는 바뀌지 않으므로 `cacheLife('max')` |
 
 - 클라이언트 컴포넌트에서는 쓸 수 없다
 - 에러 응답은 반환하지 말고 throw한다 (throw된 결과는 캐싱되지 않는다)

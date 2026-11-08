@@ -7,6 +7,7 @@ export default defineConfig({
       // tsconfig의 @/* → src/* 경로 별칭
       '@': fileURLToPath(new URL('./src', import.meta.url)),
       'server-only': fileURLToPath(new URL('./test/server-only-stub.ts', import.meta.url)),
+      'next/cache': fileURLToPath(new URL('./test/next-cache-stub.ts', import.meta.url)),
     },
   },
   test: {

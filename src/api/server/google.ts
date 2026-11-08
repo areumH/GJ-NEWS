@@ -1,5 +1,6 @@
 // src/api/server/*: 서버에서 외부 API를 직접 호출하는 함수 (클라이언트에서 import하면 빌드 실패)
 import 'server-only';
+import { cacheLife } from 'next/cache';
 import { ENV } from '@/config/env';
 import { UPSTREAM_TIMEOUT_MS } from '@/constants/api';
 import { GoogleSentimentResponse, SentimentValue } from '@/types/sentiment';
@@ -7,6 +8,8 @@ import { GoogleSentimentResponse, SentimentValue } from '@/types/sentiment';
 // 텍스트 하나의 감정 점수. 같은 텍스트는 'use cache'로 다시 분석하지 않는다
 export const analyzeSentiment = async (text: string): Promise<SentimentValue> => {
   'use cache';
+  // 같은 문장의 점수는 바뀌지 않으므로 가장 긴 캐시 수명을 쓴다 (기본 수명이면 약 15분마다 Google을 다시 호출)
+  cacheLife('max');
 
   const res = await fetch('https://language.googleapis.com/v2/documents:analyzeSentiment', {
     method: 'POST',
